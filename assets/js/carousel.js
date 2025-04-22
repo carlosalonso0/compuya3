@@ -256,17 +256,20 @@ function moveProductCarousel(carouselId, direction) {
     const productContainer = carousel.querySelector('.product-carousel');
     if (!productContainer) return;
     
+    // Verificar si es un carrusel de grid o de scroll
+    const isGridCarousel = productContainer.classList.contains('few-products');
+    if (isGridCarousel) return; // No hay nada que mover en carruseles de grid
+    
+    // Para carruseles con scroll horizontal
     // Verificar la cantidad de productos
-    const productCards = productContainer.querySelectorAll('.product-card');
+    const productCards = productContainer.querySelectorAll('.product-card-wrapper');
     const productCount = productCards.length;
     
     // Si hay menos de 5 productos, no hacemos nada
     if (productCount <= 4) return;
     
-    // Obtener ancho visible del contenedor (espacio para 4 productos)
+    // Calcular el ancho de un solo producto (25% del contenedor)
     const containerWidth = productContainer.clientWidth;
-    
-    // Calcular el ancho de un solo producto
     const cardWidth = containerWidth / 4;
     
     // Calcular el desplazamiento actual
@@ -278,7 +281,7 @@ function moveProductCarousel(carouselId, direction) {
         newScroll = currentScroll + cardWidth;
         
         // Si estamos llegando al final, volver al inicio
-        if (newScroll + 5 >= productContainer.scrollWidth - containerWidth) {
+        if (newScroll + containerWidth >= productContainer.scrollWidth - 5) {
             newScroll = 0;
         }
     } else {
@@ -287,7 +290,7 @@ function moveProductCarousel(carouselId, direction) {
         // Si estamos al inicio y vamos hacia atrás, ir al final
         if (newScroll < 5) {
             // Ir al último grupo de 4 productos
-            const lastGroupPosition = Math.max(0, (productCount - 4) * cardWidth);
+            const lastGroupPosition = Math.max(0, productContainer.scrollWidth - containerWidth);
             newScroll = lastGroupPosition;
         }
     }

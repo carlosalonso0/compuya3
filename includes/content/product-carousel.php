@@ -1,6 +1,6 @@
 <?php
 /**
- * Renderiza un carrusel de productos con bucle horizontal (versión final)
+ * Renderiza un carrusel de productos
  * 
  * @param int $carrusel_id ID del carrusel
  * @param string $titulo Título opcional del carrusel
@@ -19,7 +19,6 @@ function renderizar_carrusel_productos($carrusel_id, $titulo = '') {
     // Obtener los productos según el tipo de contenido (manual o por categoría)
     $productos = [];
     
-    // Para todos los carruseles, usar el mismo método de obtención
     if ($carrusel['tipo_contenido'] == CAROUSEL_TIPO_MANUAL) {
         $productos = obtener_productos_carrusel_manual($carrusel_id);
     } elseif ($carrusel['tipo_contenido'] == CAROUSEL_TIPO_CATEGORIA && !empty($carrusel['categoria_id'])) {
@@ -49,12 +48,7 @@ function renderizar_carrusel_productos($carrusel_id, $titulo = '') {
     $total_productos = count($productos);
     
     // Determinar clase de carrusel según cantidad de productos
-    $carousel_class = '';
-    if ($total_productos > 4) {
-        $carousel_class = 'full-carousel';
-    } else {
-        $carousel_class = 'few-products items-' . $total_productos;
-    }
+    $carousel_class = ($total_productos > 4) ? 'full-carousel' : 'few-products items-' . $total_productos;
     
     // Mostrar título del carrusel si está definido
     if (!empty($titulo_mostrar)) {
@@ -77,9 +71,16 @@ function renderizar_carrusel_productos($carrusel_id, $titulo = '') {
     } else {
         // Para carruseles 8 y 9, mostrar productos con el mismo tamaño fijo
         foreach ($productos as $producto) {
-            echo '<div class="product-card-container">';
+            echo '<div class="product-card-wrapper">';
             include INCLUDES_PATH . '/components/product-card.php';
-            echo '</div>'; // .product-card-container
+            echo '</div>';
+        }
+        
+        // Si hay menos de 4 productos, agregar espacios vacíos para mantener la estructura
+        if ($total_productos < 4) {
+            for ($i = 0; $i < (4 - $total_productos); $i++) {
+                echo '<div class="product-card-wrapper empty-space"></div>';
+            }
         }
     }
     
