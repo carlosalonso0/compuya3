@@ -1,6 +1,6 @@
 <?php
 /**
- * Renderiza un carrusel de productos
+ * Renderiza un carrusel de productos con bucle horizontal (versión final)
  * 
  * @param int $carrusel_id ID del carrusel
  * @param string $titulo Título opcional del carrusel
@@ -35,7 +35,7 @@ function renderizar_carrusel_productos($carrusel_id, $titulo = '') {
     $titulo_mostrar = !empty($titulo) ? $titulo : $carrusel['nombre'];
     
     // Si es un carrusel especial (6, 8, 9), usar su configuración específica
-    $items_mostrar = 1; // Por defecto, mostrar 1 producto a la vez
+    $items_mostrar = 4; // Por defecto, mostrar 4 productos a la vez
     if (isset($CARRUSELES_ESPECIALES[$carrusel_id])) {
         $items_mostrar = $CARRUSELES_ESPECIALES[$carrusel_id]['items'];
         
@@ -45,8 +45,60 @@ function renderizar_carrusel_productos($carrusel_id, $titulo = '') {
         }
     }
     
-    // Renderizar el carrusel
-    $tipo = CAROUSEL_PRODUCTOS;
-    $items = $productos;
-    include INCLUDES_PATH . '/components/carousel.php';
+    // Limitar a 4 productos por página visibles
+    $total_productos = count($productos);
+    
+    // Determinar clase de carrusel según cantidad de productos
+    $carousel_class = '';
+    if ($total_productos > 4) {
+        $carousel_class = 'full-carousel';
+    } else {
+        $carousel_class = 'few-products items-' . $total_productos;
+    }
+    
+    // Mostrar título del carrusel si está definido
+    if (!empty($titulo_mostrar)) {
+        echo '<h3 class="section-title">' . htmlspecialchars($titulo_mostrar) . '</h3>';
+    }
+    
+    // Iniciar el contenedor del carrusel
+    echo '<div class="carousel" id="carousel-' . $carrusel_id . '">';
+    
+    // Contenedor de productos
+    echo '<div class="product-carousel ' . $carousel_class . '" id="product-carousel-' . $carrusel_id . '">';
+    
+    // Si es el carrusel 6 (ofertas especiales)
+    if ($carrusel_id == 6) {
+        // Mostrar el primer producto con el formato de oferta especial
+        if (!empty($productos[0])) {
+            $producto = $productos[0];
+            include INCLUDES_PATH . '/components/special-offer.php';
+        }
+    } else {
+        // Para carruseles 8 y 9, mostrar productos con el mismo tamaño fijo
+        foreach ($productos as $producto) {
+            echo '<div class="product-card-container">';
+            include INCLUDES_PATH . '/components/product-card.php';
+            echo '</div>'; // .product-card-container
+        }
+    }
+    
+    echo '</div>'; // .product-carousel
+    
+    // Mostrar controles de navegación solo si hay más de 4 productos
+    if ($total_productos > 4) {
+        echo '<div class="carousel-controls">';
+        echo '<button class="carousel-control prev" data-carousel="carousel-' . $carrusel_id . '">&#10094;</button>';
+        echo '<button class="carousel-control next" data-carousel="carousel-' . $carrusel_id . '">&#10095;</button>';
+        echo '</div>';
+    }
+    
+    echo '</div>'; // .carousel
+    
+    // Inicializar el carrusel con JavaScript
+    echo '<script>';
+    echo 'document.addEventListener("DOMContentLoaded", function() {';
+    echo '    initCarousel("carousel-' . $carrusel_id . '", false);';
+    echo '});';
+    echo '</script>';
 }

@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo = isset($_POST['titulo']) ? trim($_POST['titulo']) : '';
     $url_destino = isset($_POST['url_destino']) ? trim($_POST['url_destino']) : '';
     $activo = isset($_POST['activo']) ? 1 : 0;
+    $posicion_img = isset($_POST['posicion_img']) ? trim($_POST['posicion_img']) : 'center center';
     
     $fecha_inicio = !empty($_POST['fecha_inicio']) ? $_POST['fecha_inicio'] . ' 00:00:00' : NULL;
     $fecha_fin = !empty($_POST['fecha_fin']) ? $_POST['fecha_fin'] . ' 23:59:59' : NULL;
@@ -64,16 +65,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             // Insertar banner en la base de datos
-            $sql = "INSERT INTO banners (titulo, url_destino, tipo_carrusel, activo, fecha_inicio, fecha_fin) 
-                    VALUES (?, ?, 'banner', ?, ?, ?)";
-            $params = [$titulo, $url_destino, $activo, $fecha_inicio, $fecha_fin];
+            $sql = "INSERT INTO banners (titulo, url_destino, tipo_carrusel, activo, fecha_inicio, fecha_fin, posicion_img) 
+                    VALUES (?, ?, 'banner', ?, ?, ?, ?)";
+            $params = [$titulo, $url_destino, $activo, $fecha_inicio, $fecha_fin, $posicion_img];
             
             $banner_id = insert($sql, $params);
             
             if ($banner_id) {
                 // Generar nombre de archivo
                 $extension = pathinfo($imagen['name'], PATHINFO_EXTENSION);
-                $filename = 'banner_' . $carrusel_id . '_' . $banner_id . '.' . $extension;
+                $filename = 'banner_' . $banner_id . '.' . $extension;
                 $filepath = $upload_dir . '/' . $filename;
                 
                 // Mover archivo subido
@@ -164,6 +165,22 @@ include_once 'includes/header.php';
                         600x300px (Banner estándar)
                     <?php endif; ?>
                     </small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="posicion_img">Posición de la imagen:</label>
+                    <select id="posicion_img" name="posicion_img">
+                        <option value="center center">Centrada (por defecto)</option>
+                        <option value="top center">Arriba</option>
+                        <option value="bottom center">Abajo</option>
+                        <option value="center left">Izquierda</option>
+                        <option value="center right">Derecha</option>
+                        <option value="top left">Arriba-Izquierda</option>
+                        <option value="top right">Arriba-Derecha</option>
+                        <option value="bottom left">Abajo-Izquierda</option>
+                        <option value="bottom right">Abajo-Derecha</option>
+                    </select>
+                    <small>Selecciona cómo se posicionará la imagen dentro del banner</small>
                 </div>
                 
                 <div class="form-group">

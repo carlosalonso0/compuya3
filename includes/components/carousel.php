@@ -20,13 +20,20 @@ $carousel_id = "carousel-" . $carrusel_id;
 // Determinar si es el carrusel 1 (banner principal a ancho completo)
 $es_banner_principal = ($carrusel_id == 1 && $tipo == CAROUSEL_BANNERS);
 
-// Si es el banner principal, no se muestra dentro de un div.carousel
+// Si es el banner principal, se maneja de forma especial
 if ($es_banner_principal) {
-    // Mostrar el primer banner (solo se muestra uno a la vez)
-    if (!empty($items[0])) {
-        $banner = $items[0];
+    // Crear contenedor para el banner principal
+    echo '<div class="banner-container">';
+    
+    // Mostrar todos los banners (solo uno será visible a la vez)
+    foreach ($items as $key => $banner) {
+        $style = ($key == 0) ? 'display: block; opacity: 1;' : 'display: none; opacity: 0;';
+        echo '<div style="' . $style . '" class="banner-slide" data-index="' . $key . '">';
         include INCLUDES_PATH . '/components/banner.php';
+        echo '</div>';
     }
+    
+    echo '</div>';
     
     // Mostrar puntos de navegación si hay más de un banner
     if (count($items) > 1) {
@@ -50,16 +57,20 @@ if ($es_banner_principal) {
 <div class="carousel" id="<?php echo $carousel_id; ?>">
     <?php if ($tipo == CAROUSEL_BANNERS): ?>
         <!-- Carrusel de banners -->
-        <?php 
-        // Mostrar el primer banner (solo se muestra uno a la vez)
-        if (!empty($items[0])) {
-            $banner = $items[0];
-            include INCLUDES_PATH . '/components/banner.php';
-        }
+        <div class="banner-container">
+            <?php foreach ($items as $key => $banner): ?>
+                <?php
+                // El primer banner estará visible, los demás ocultos
+                $style = ($key == 0) ? 'display: block; opacity: 1;' : 'display: none; opacity: 0;';
+                ?>
+                <div class="banner-slide" data-index="<?php echo $key; ?>" style="<?php echo $style; ?>">
+                    <?php include INCLUDES_PATH . '/components/banner.php'; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
         
-        // Mostrar puntos de navegación si hay más de un banner
-        if (count($items) > 1):
-        ?>
+        <!-- Mostrar puntos de navegación si hay más de un banner -->
+        <?php if (count($items) > 1): ?>
             <div class="carousel-dots">
                 <?php foreach ($items as $key => $item): ?>
                     <div class="dot <?php echo ($key == 0) ? 'active' : ''; ?>" data-slide="<?php echo $key; ?>"></div>
@@ -96,11 +107,9 @@ if ($es_banner_principal) {
     <?php endif; ?>
 </div>
 
-<?php if ($carrusel_id == 6 || ($tipo == CAROUSEL_BANNERS && count($items) > 1)): ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Inicializar carrusel
     initCarousel('<?php echo $carousel_id; ?>', <?php echo $tipo == CAROUSEL_BANNERS ? 'true' : 'false'; ?>);
 });
 </script>
-<?php endif; ?>

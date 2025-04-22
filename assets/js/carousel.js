@@ -53,26 +53,41 @@ function setupBannerCarousel(carouselId) {
         
         // Mover los banners al contenedor
         banners.forEach((banner, index) => {
-            const clone = banner.cloneNode(true);
-            clone.dataset.index = index;
-            if (index > 0) {
-                clone.style.display = 'none';
+            const slide = document.createElement('div');
+            slide.className = 'banner-slide';
+            slide.dataset.index = index;
+            slide.style.position = 'absolute';
+            slide.style.top = '0';
+            slide.style.left = '0';
+            slide.style.width = '100%';
+            slide.style.height = '100%';
+            slide.style.transition = `opacity ${CAROUSEL_TRANSITION_TIME}ms ease`;
+            
+            if (index === 0) {
+                slide.style.opacity = '1';
+                slide.style.display = 'block';
+            } else {
+                slide.style.opacity = '0';
+                slide.style.display = 'none';
             }
-            bannerContainer.appendChild(clone);
+            
+            // Clonar el banner y añadirlo al slide
+            const clone = banner.cloneNode(true);
+            slide.appendChild(clone);
+            bannerContainer.appendChild(slide);
         });
         
         // Si hay un div con la clase carousel-dots, lo preservamos
         const dots = carousel.querySelector('.carousel-dots');
         
         // Reemplazar el contenido con el nuevo contenedor
-        const carouselContent = carousel.innerHTML;
         carousel.innerHTML = '';
         carousel.appendChild(bannerContainer);
         
         // Agregar de nuevo los dots o crear nuevos si no existían
         if (dots) {
             carousel.appendChild(dots);
-        } else {
+        } else if (banners.length > 1) {
             const newDots = document.createElement('div');
             newDots.className = 'carousel-dots';
             banners.forEach((_, index) => {
@@ -104,6 +119,8 @@ function setupBannerCarousel(carouselId) {
 
 /**
  * Cambiar slide en carrusel de banners
+/**
+ * Cambiar slide en carrusel de banners - Con tiempos ajustados
  * @param {string} carouselId - ID del carrusel
  * @param {number} index - Índice del slide a mostrar
  */
@@ -114,34 +131,76 @@ function changeBannerSlide(carouselId, index) {
     const bannerContainer = carousel.querySelector('.banner-container');
     if (!bannerContainer) return;
     
-    const banners = bannerContainer.querySelectorAll('.carousel-banner');
+    const bannerSlides = bannerContainer.querySelectorAll('.banner-slide');
+    if (!bannerSlides.length) return;
     
-    // Ocultar todos los banners
-    banners.forEach((banner) => {
-        banner.style.opacity = '0';
-        setTimeout(() => {
-            banner.style.display = 'none';
-        }, CAROUSEL_TRANSITION_TIME);
+    // Encontrar el slide actualmente visible
+    let currentSlide = null;
+    let currentIndex = -1;
+    
+    bannerSlides.forEach((slide, idx) => {
+        if (slide.style.opacity === '1' || window.getComputedStyle(slide).opacity === '1') {
+            currentSlide = slide;
+            currentIndex = idx;
+        }
     });
     
-    // Mostrar el banner seleccionado
-    const targetBanner = banners[index];
-    if (targetBanner) {
-        setTimeout(() => {
-            targetBanner.style.display = 'block';
-            setTimeout(() => {
-                targetBanner.style.opacity = '1';
-            }, 50);
-        }, CAROUSEL_TRANSITION_TIME);
-    }
+    // Si el índice es el mismo o no encontramos el slide actual, validamos
+    if (currentIndex === index) return;
+    if (currentIndex === -1 && index > 0) currentIndex = 0;
     
-    // Actualizar dots
+    // Encontrar el nuevo slide a mostrar
+    const newSlide = bannerSlides[index];
+    if (!newSlide) return;
+    
+    // Mantener la altura del contenedor fija durante la transición
+    const containerHeight = bannerContainer.offsetHeight;
+    const containerWidth = bannerContainer.offsetWidth;
+    bannerContainer.style.height = containerHeight + 'px';
+    bannerContainer.style.width = containerWidth + 'px';
+    
+    // TRANSICIÓN MEJORADA: Mostrar nuevo slide y ocultar el actual simultáneamente
+    
+    // 1. Asegurar que el nuevo slide esté listo para aparecer
+    newSlide.style.display = 'block';
+    newSlide.style.zIndex = '1'; // Colocar detrás del slide actual
+    newSlide.style.opacity = '0';
+    
+    // 2. Pequeño retraso para asegurar que el navegador procese
+    setTimeout(() => {
+        // 3. Colocar el nuevo slide por encima para la transición
+        newSlide.style.zIndex = '2';
+        
+        // 4. Si existe un slide actual, asegurar que esté visible
+        if (currentSlide) {
+            currentSlide.style.zIndex = '1';
+            currentSlide.style.display = 'block';
+        }
+        
+        // 5. Iniciar la transición de opacidad (aparece el nuevo, desaparece el actual)
+        newSlide.style.opacity = '1';
+        if (currentSlide) {
+            currentSlide.style.opacity = '0';
+        }
+        
+        // 6. Después de la transición, limpiar
+        setTimeout(() => {
+            if (currentSlide) {
+                currentSlide.style.display = 'none';
+            }
+            
+            // Restaurar el z-index normal
+            newSlide.style.zIndex = '';
+            if (currentSlide) currentSlide.style.zIndex = '';
+        }, CAROUSEL_TRANSITION_TIME + 50);
+    }, 50);
+    
+    // Actualizar los dots
     const dots = carousel.querySelectorAll('.carousel-dots .dot');
     dots.forEach((dot, i) => {
         dot.classList.toggle('active', i === index);
     });
 }
-
 /**
  * Configurar carrusel de productos
  * @param {string} carouselId - ID del carrusel
@@ -156,18 +215,33 @@ function setupProductCarousel(carouselId) {
     // Para carrusel 6 (oferta especial), no hacer nada más
     if (carouselId === 'carousel-6') return;
     
+    // Verificar la cantidad de productos
+    const productCards = productContainer.querySelectorAll('.product-card');
+    const productCount = productCards.length;
+    
+    // Si hay menos de 5 productos, no necesitamos controles ni scroll
+    if (productCount <= 4) {
+        const controls = carousel.querySelector('.carousel-controls');
+        if (controls) controls.style.display = 'none';
+        
+        // Ajustar el contenedor para que no permita scroll
+        productContainer.style.overflowX = 'hidden';
+        return;
+    }
+    
     // Hacer que el scroll sea suave
     productContainer.style.scrollBehavior = 'smooth';
     
-    // Verificar si hay suficientes productos para scroll horizontal
-    const visibleWidth = productContainer.clientWidth;
-    const scrollWidth = productContainer.scrollWidth;
+    // Asegurar que solo se muestren 4 productos a la vez
+    const containerWidth = productContainer.clientWidth;
+    const cardWidth = containerWidth / 4;
     
-    // Si no hay suficiente contenido para scroll, ocultar controles
-    if (scrollWidth <= visibleWidth) {
-        const controls = carousel.querySelector('.carousel-controls');
-        if (controls) controls.style.display = 'none';
-    }
+    // Establecer anchos exactos a cada tarjeta de producto
+    productCards.forEach(card => {
+        card.style.flex = `0 0 ${cardWidth - 15}px`;
+        card.style.width = `${cardWidth - 15}px`;
+        card.style.maxWidth = `${cardWidth - 15}px`;
+    });
 }
 
 /**
@@ -182,18 +256,40 @@ function moveProductCarousel(carouselId, direction) {
     const productContainer = carousel.querySelector('.product-carousel');
     if (!productContainer) return;
     
-    // Obtener ancho visible del contenedor
+    // Verificar la cantidad de productos
+    const productCards = productContainer.querySelectorAll('.product-card');
+    const productCount = productCards.length;
+    
+    // Si hay menos de 5 productos, no hacemos nada
+    if (productCount <= 4) return;
+    
+    // Obtener ancho visible del contenedor (espacio para 4 productos)
     const containerWidth = productContainer.clientWidth;
+    
+    // Calcular el ancho de un solo producto
+    const cardWidth = containerWidth / 4;
     
     // Calcular el desplazamiento actual
     const currentScroll = productContainer.scrollLeft;
     
-    // Calcular nuevo desplazamiento (un carrusel completo a la vez)
+    // Calcular nuevo desplazamiento (un producto a la vez)
     let newScroll;
     if (direction === 'next') {
-        newScroll = currentScroll + containerWidth;
+        newScroll = currentScroll + cardWidth;
+        
+        // Si estamos llegando al final, volver al inicio
+        if (newScroll + 5 >= productContainer.scrollWidth - containerWidth) {
+            newScroll = 0;
+        }
     } else {
-        newScroll = Math.max(0, currentScroll - containerWidth);
+        newScroll = currentScroll - cardWidth;
+        
+        // Si estamos al inicio y vamos hacia atrás, ir al final
+        if (newScroll < 5) {
+            // Ir al último grupo de 4 productos
+            const lastGroupPosition = Math.max(0, (productCount - 4) * cardWidth);
+            newScroll = lastGroupPosition;
+        }
     }
     
     // Animar el desplazamiento
@@ -202,7 +298,6 @@ function moveProductCarousel(carouselId, direction) {
         behavior: 'smooth'
     });
 }
-
 /**
  * Configurar controles de carrusel
  * @param {string} carouselId - ID del carrusel

@@ -1,6 +1,6 @@
 <?php
 /**
- * Componente de oferta destacada (carrusel 6)
+ * Componente de oferta destacada (carrusel 6) - Versión vertical
  * 
  * @param array $producto Datos del producto
  */

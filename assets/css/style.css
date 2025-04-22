@@ -129,16 +129,14 @@ body {
 
 /* Secciones de los carruseles */
 .banner-section-1 {
-    width: 100%;
-    margin-bottom: 30px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
     overflow: hidden;
-}
-
-.banner-section-1 .carousel,
-.banner-section-1 .carousel-banner {
-    border: none;
-    box-shadow: none;
-    background: transparent;
+    margin-bottom: 30px;
 }
 
 .banner-section-2345 {
@@ -232,6 +230,79 @@ body {
     grid-column: 2;
 }
 
+/* Carruseles con tamaño fijo e imágenes ajustadas */
+.fixed-height-carousel {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Banner principal (carrusel 1) */
+#carousel-1 {
+    height: 600px; /* Altura fija del banner principal */
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Banners secundarios con tamaño fijo */
+.banner-left #carousel-2 {
+    height: 400px; /* Altura fija */
+    width: 100%;
+}
+
+.banner-center #carousel-3 {
+    height: 400px; /* Altura fija */
+    width: 100%;
+}
+
+.banner-right #carousel-4,
+.banner-right #carousel-5 {
+    height: 190px; /* Altura fija */
+    width: 100%;
+}
+
+.carousel-7 #carousel-7 {
+    height: 150px; /* Altura fija */
+    width: 100%;
+}
+
+/* Contenedor de banners */
+.banner-container {
+    position: relative;
+    height: 100% !important;
+    width: 100% !important;
+    overflow: hidden;
+}
+
+/* Controlando la forma en que se muestran las imágenes */
+.banner-slide {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 500ms ease;
+}
+
+.carousel-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    background-size: cover !important; /* La imagen cubrirá todo el contenedor */
+    background-position: center center !important; /* La imagen se centrará */
+}
+
+/* Para el banner principal, queremos que se estire al ancho completo */
+.carousel-banner-1 {
+    position: relative;
+    width: 100% !important;
+    height: 100% !important;
+    background-size: cover !important;
+    background-position: center center !important;
+}
+
 /* Carruseles */
 .carousel {
     position: relative;
@@ -248,7 +319,6 @@ body {
     background-size: cover;
     background-position: center;
     position: relative;
-    
 }
 
 .carousel-banner-1 {
@@ -263,6 +333,7 @@ body {
     background-repeat: no-repeat !important;
     background-position: center;
 }
+
 .banner-content {
     position: absolute;
     bottom: 30px;
@@ -300,6 +371,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 8px;
+    z-index: 10;
 }
 
 .dot {
@@ -308,6 +380,7 @@ body {
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 50%;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .dot.active {
@@ -333,7 +406,7 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 0 10px;
-    z-index: 5;
+    z-index: 10;
 }
 
 .carousel-control {
@@ -350,6 +423,7 @@ body {
     font-size: 20px;
     border: none;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 15;
 }
 
 .carousel-control:hover {
@@ -376,6 +450,47 @@ body {
     display: block;
 }
 
+/* Estilo para contenedores de productos (mantener tamaño fijo) */
+.product-card {
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #e8e8e8;
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    scroll-snap-align: start;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-image-container {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: white;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.product-image {
+    max-width: 100%;
+    max-height: 160px;
+    object-fit: contain; /* La imagen mantendrá su proporción */
+    transition: transform 0.3s;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
 /* Carrusel especial 6 */
 .special-offer-card {
     width: 100%;
@@ -395,6 +510,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
+    overflow: hidden;
 }
 
 .offer-image img {
@@ -479,6 +595,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #f9f9f9;
+    overflow: hidden;
 }
 
 .static-offer-image img {
@@ -614,7 +731,6 @@ body {
 .payment-methods img {
     height: 24px;
 }
-
 
 /* Responsive */
 @media (max-width: 1200px) {
@@ -752,31 +868,338 @@ body {
     }
 }
 
-/* Carrusel 1 (banner principal) */
-.carousel-banner-1 {
-    height: 600px;
+/* Carruseles de productos con tamaño fijo */
+.product-carousel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Siempre 4 columnas */
+    gap: 15px;
     width: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    overflow-x: auto;
+    padding: 10px 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
-/* Carruseles 2-5 con tamaños específicos */
-.banner-left .carousel-banner {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
+.product-carousel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
 }
 
-.banner-center .carousel-banner {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
+/* Para carruseles con menos de 4 productos */
+.product-carousel.few-products {
+    /* Eliminar comportamiento de grid para menos de 4 productos */
+    display: flex;
+    justify-content: flex-start; /* Alinear a la izquierda */
+    flex-wrap: nowrap; /* No envolver */
 }
 
-.banner-right .carousel-banner {
-    width: 100%;
-    height: 190px;
-    object-fit: cover;
+.product-carousel.few-products .product-card {
+    width: calc(25% - 12px); /* Ancho fijo para cada tarjeta (25% - margen) */
+    flex: 0 0 calc(25% - 12px); /* No crecer, no encogerse */
+    margin-right: 15px; /* Espacio entre tarjetas */
 }
 
+/* Si hay 3 productos, el último ocupa 25% solamente */
+.product-carousel.few-products.items-3 .product-card:last-child {
+    margin-right: 0;
+}
+
+/* Si hay 2 productos, cada uno ocupa 25% solamente */
+.product-carousel.few-products.items-2 .product-card {
+    margin-right: 15px;
+}
+
+.product-carousel.few-products.items-2 .product-card:last-child {
+    margin-right: 0;
+}
+
+/* Si hay 1 producto, ocupa 25% solamente */
+.product-carousel.few-products.items-1 .product-card {
+    margin-right: 0;
+}
+
+/* Para carruseles con más de 4 productos (el bucle) */
+.product-carousel.full-carousel {
+    overflow-x: auto;
+    grid-auto-flow: column; /* Permitir más columnas de las definidas */
+    grid-auto-columns: 25%; /* Cada columna adicional ocupa 25% */
+}
+
+.product-carousel.full-carousel .product-card {
+    width: 100%;
+    scroll-snap-align: start;
+}
+
+/* Alineación de carruseles 6 con 8, y 7 con 9 */
+.product-section-6789 {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: repeat(2, auto);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.product-left {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-right {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Tamaños fijos para cada carrusel */
+.carousel-6 {
+    height: 300px; /* Misma altura que carousel-8 */
+    overflow: hidden; /* Evitar desbordamiento */
+    margin-bottom: 15px; /* Espacio antes del siguiente carrusel */
+}
+
+#carousel-6 {
+    height: 100%;
+}
+
+.carousel-7 {
+    height: 150px; /* Misma altura que carousel-9 */
+    overflow: hidden; /* Evitar desbordamiento */
+}
+
+#carousel-7 {
+    height: 100%;
+}
+
+.carousel-8 {
+    height: 300px;
+    overflow: hidden; /* Evitar desbordamiento */
+    margin-bottom: 15px; /* Espacio antes del siguiente carrusel */
+}
+
+#carousel-8 {
+    height: 100%;
+}
+
+.carousel-9 {
+    height: 150px;
+    overflow: hidden; /* Evitar desbordamiento */
+}
+
+#carousel-9 {
+    height: 100%;
+}
+
+/* Evitar que productos se superpongan al footer */
+.main-content {
+    min-height: 600px;
+    padding-bottom: 60px; /* Espacio extra al final */
+}
+
+/* Reestructurar carrusel de ofertas (vertical) */
+.special-offer-card {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #e8e8e8;
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Cambiado a vertical */
+}
+
+.offer-image {
+    width: 100%; /* Ancho completo */
+    height: 60%; /* 60% de la altura */
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.offer-content {
+    width: 100%; /* Ancho completo */
+    height: 40%; /* 40% de la altura */
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden; /* Evitar desbordamiento */
+}
+
+.offer-title {
+    font-size: 18px; /* Reducido para que encaje mejor */
+    font-weight: bold;
+    color: #e53935;
+    margin-bottom: 5px;
+}
+
+/* Carruseles de productos con tamaños exactos */
+.product-carousel {
+    display: flex; /* Usar flexbox en lugar de grid */
+    flex-wrap: nowrap; /* No permitir que los productos salten a la siguiente línea */
+    gap: 15px;
+    padding: 10px 0;
+    overflow-x: auto; /* Permitir scroll horizontal */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scroll-snap-type: x mandatory;
+    width: 100%;
+}
+
+.product-carousel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+/* Cada tarjeta de producto tiene un ancho exacto del 25% menos el gap */
+.product-carousel .product-card {
+    flex: 0 0 calc(25% - 12px); /* No crecer, no encogerse, ancho exacto de 25% */
+    width: calc(25% - 12px);
+    max-width: calc(25% - 12px);
+    scroll-snap-align: start;
+    margin-right: 0; /* Quitar margen extra */
+}
+
+/* Arreglo para último producto */
+.product-carousel .product-card:last-child {
+    margin-right: 0;
+}
+
+/* Para carruseles con menos de 4 productos, mantener el mismo ancho */
+.product-carousel.few-products {
+    justify-content: flex-start; /* Alinear a la izquierda */
+}
+
+/* Contenedor para controles de navegación */
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    z-index: 5;
+    pointer-events: none; /* Los botones seguirán recibiendo eventos */
+}
+
+.carousel-control {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    pointer-events: auto; /* Restaurar eventos para los botones */
+}
+
+/* Alineación de carruseles 6 con 8, y 7 con 9 */
+.product-section-6789 {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: repeat(2, auto);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.product-left {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-right {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Tamaños fijos y contenedores para cada carrusel */
+.carousel-6, .carousel-7, .carousel-8, .carousel-9 {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-6, .carousel-8 {
+    height: 300px; /* Misma altura para carousel-6 y carousel-8 */
+    margin-bottom: 15px;
+}
+
+.carousel-7, .carousel-9 {
+    height: 150px; /* Misma altura para carousel-7 y carousel-9 */
+}
+
+#carousel-6, #carousel-7, #carousel-8, #carousel-9 {
+    height: 100%;
+    position: relative;
+}
+
+/* Evitar que productos se superpongan al footer */
+.main-content {
+    padding-bottom: 80px; /* Espacio extra al final */
+}
+
+/* Reestructurar carrusel de ofertas (vertical) */
+.special-offer-card {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #e8e8e8;
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Cambiado a vertical */
+}
+
+.offer-image {
+    width: 100%; /* Ancho completo */
+    height: 60%; /* 60% de la altura */
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.offer-content {
+    width: 100%; /* Ancho completo */
+    height: 40%; /* 40% de la altura */
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Mejoras para la visualización en pantallas más pequeñas */
+@media (max-width: 1200px) {
+    .product-carousel .product-card {
+        flex: 0 0 calc(25% - 10px);
+        width: calc(25% - 10px);
+        max-width: calc(25% - 10px);
+    }
+}
+
+@media (max-width: 992px) {
+    .product-carousel .product-card {
+        flex: 0 0 calc(50% - 10px);
+        width: calc(50% - 10px);
+        max-width: calc(50% - 10px);
+    }
+}

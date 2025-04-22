@@ -136,12 +136,38 @@ function get_imagen_producto($producto_id, $tipo = 'tarjeta', $numero = 1) {
  * Generar URL de imagen para banner
  */
 // En functions.php - Modificar esta función
+/**
+ * Generar URL de imagen para banner
+ */
 function get_imagen_banner($banner_id, $carrusel_id) {
-    // Comprobar múltiples extensiones posibles
-    $extensiones = ['png', 'jpg', 'jpeg', 'webp'];
-    $ruta = '';
+    // Esta es la parte importante: debemos obtener la imagen del banner desde la base de datos
+    // en lugar de intentar construir el nombre del archivo
+    $sql = "SELECT imagen FROM banners WHERE id = ?";
+    $banner = get_row($sql, [$banner_id]);
+    
+    if ($banner && !empty($banner['imagen'])) {
+        // Si el banner tiene una imagen en la base de datos, usamos esa
+        $archivo = BANNERS_URL . '/' . $carrusel_id . '/' . $banner['imagen'];
+        $ruta_fisica = str_replace(SITE_URL, BASE_PATH, $archivo);
+        
+        if (file_exists($ruta_fisica)) {
+            return $archivo;
+        }
+    }
+    
+    // Plan B: intentar con nombres de archivo estándar
+    $extensiones = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
     
     foreach ($extensiones as $ext) {
+        // Probamos primero con el formato que vemos en tu screenshot: banner_NNN
+        $archivo = BANNERS_URL . '/' . $carrusel_id . '/banner_' . $banner_id . '.' . $ext;
+        $ruta_fisica = str_replace(SITE_URL, BASE_PATH, $archivo);
+        
+        if (file_exists($ruta_fisica)) {
+            return $archivo;
+        }
+        
+        // Probamos con el formato que intentamos antes: banner_carrusel_banner
         $archivo = BANNERS_URL . '/' . $carrusel_id . '/banner_' . $carrusel_id . '_' . $banner_id . '.' . $ext;
         $ruta_fisica = str_replace(SITE_URL, BASE_PATH, $archivo);
         
@@ -150,10 +176,10 @@ function get_imagen_banner($banner_id, $carrusel_id) {
         }
     }
     
-    // Si no encontramos el archivo con ninguna extensión, usar imagen por defecto
+    // Si llegamos aquí, no encontramos la imagen, devolvemos la imagen por defecto
+    error_log("No se pudo encontrar imagen para banner ID: $banner_id, carrusel ID: $carrusel_id");
     return SITE_IMG_URL . '/no-banner.webp';
 }
-
 /**
  * Obtener la URL actual
  */

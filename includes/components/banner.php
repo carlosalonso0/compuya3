@@ -11,18 +11,35 @@ if (empty($banner) || empty($carrusel_id)) {
     return;
 }
 
+// Definir tiempo de transición (en milisegundos)
+$CAROUSEL_TRANSITION_TIME = 500;
+
 // Preparar los datos del banner
 $id = $banner['id'];
-$titulo = $banner['titulo'];
-$url_destino = $banner['url_destino'];
+$titulo = isset($banner['titulo']) ? $banner['titulo'] : '';
+$url_destino = isset($banner['url_destino']) ? $banner['url_destino'] : '';
 $imagen_url = get_imagen_banner($id, $carrusel_id);
+
+// Obtener posición de la imagen (si existe en la base de datos)
+// Por defecto, centramos la imagen
+$posicion_img = isset($banner['posicion_img']) ? $banner['posicion_img'] : 'center center';
 
 // Determinar si es el banner principal (carrusel 1)
 $es_principal = ($carrusel_id == 1);
 $clase_principal = $es_principal ? 'carousel-banner-1' : '';
+
+// Añadir CSS para transiciones y posicionamiento de la imagen
+$style = "
+    background-image: url('{$imagen_url}');
+    background-size: cover;
+    background-position: {$posicion_img};
+    width: 100%;
+    height: 100%;
+    transition: opacity {$CAROUSEL_TRANSITION_TIME}ms ease;
+";
 ?>
 
-<div class="carousel-banner <?php echo $clase_principal; ?>" style="background-image: url('<?php echo $imagen_url; ?>');">
+<div class="carousel-banner <?php echo $clase_principal; ?>" style="<?php echo $style; ?>">
     <?php if (!empty($titulo)): ?>
         <div class="banner-content">
             <h2 class="banner-title"><?php echo htmlspecialchars($titulo); ?></h2>
