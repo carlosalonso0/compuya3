@@ -1,0 +1,202 @@
+/* Tarjetas de producto */
+.product-card {
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #e8e8e8;
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    scroll-snap-align: start;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 15px;
+    background-color: #f9f9f9;
+}
+
+.reference-text {
+    color: #888888;
+    font-size: 12px;
+}
+
+.brand-name {
+    color: #222222;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.product-image-container {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: white;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.product-image {
+    max-width: 100%;
+    max-height: 160px;
+    object-fit: contain;
+    transition: transform 0.3s;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.separator {
+    position: relative;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+.separator::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, #e53935 50px, transparent 50px);
+}
+
+.social-tag {
+    position: absolute;
+    right: 15px;
+    bottom: 0;
+    color: #e53935;
+    font-size: 10px;
+}
+
+.product-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-name {
+    color: #333333;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    height: 50px;
+    overflow: hidden;
+}
+
+.product-name a {
+    color: #333333;
+    text-decoration: none;
+}
+
+.product-name a:hover {
+    color: #e53935;
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.current-price {
+    color: #e53935;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.original-price {
+    color: #999999;
+    font-size: 14px;
+    text-decoration: line-through;
+}
+
+.promo-tag {
+    display: inline-block;
+    background-color: #ffebee;
+    color: #e53935;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.stock-info {
+    font-size: 12px;
+    color: #666666;
+    margin-bottom: 15px;
+}
+
+.stock-number {
+    font-weight: bold;
+}
+
+.stock-disponible {
+    color: #4caf50;
+}
+
+.sin-stock {
+    color: #f44336;
+}
+
+.btn-add-cart {
+    display: inline-block;
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #e53935;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: auto;
+}
+
+.btn-add-cart:hover {
+    background-color: #c62828;
+}
+
+.btn-add-cart.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Responsive para tarjetas */
+@media (max-width: 992px) {
+    .product-name {
+        height: 40px;
+        font-size: 13px;
+    }
+    
+    .product-image-container {
+        height: 150px;
+    }
+    
+    .product-image {
+        max-height: 130px;
+    }
+}
+
+@media (max-width: 576px) {
+    .product-card {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}
