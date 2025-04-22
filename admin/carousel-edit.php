@@ -359,6 +359,43 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    document.querySelectorAll('.btn-move-item').forEach(button => {
+        button.addEventListener('click', function() {
+            const item = this.closest('.carousel-item');
+            const direction = this.dataset.direction;
+            const container = item.parentNode;
+            
+            if (direction === 'up' && item.previousElementSibling && !item.previousElementSibling.classList.contains('btn-add-item')) {
+                container.insertBefore(item, item.previousElementSibling);
+            } else if (direction === 'down' && item.nextElementSibling) {
+                container.insertBefore(item.nextElementSibling, item);
+            }
+            
+            // Guardar nuevo orden
+            const items = Array.from(container.querySelectorAll('.carousel-item:not(.btn-add-item)'));
+            const itemIds = items.map(item => item.dataset.id);
+            const carouselId = <?php echo $id; ?>;
+            
+            fetch('save-banner-order.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `carrusel_id=${carouselId}&banner_ids=${JSON.stringify(itemIds)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    alert('Error al guardar el orden: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar el orden');
+            });
+        });
+    });
 });
 </script>
 <?php

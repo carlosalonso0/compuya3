@@ -174,8 +174,33 @@ body {
 .product-section-6789 {
     display: grid;
     grid-template-columns: 1fr 2fr;
+    grid-template-rows: repeat(2, auto);
     gap: 15px;
     margin-bottom: 30px;
+}
+
+.product-left-top {
+    grid-column: 1;
+    grid-row: 1;
+    height: 300px; /* Altura fija para alinear con carrusel 8 */
+}
+
+.product-left-bottom {
+    grid-column: 1;
+    grid-row: 2;
+    height: 150px; /* Altura fija para alinear con carrusel 9 */
+}
+
+.product-right-top {
+    grid-column: 2;
+    grid-row: 1;
+    height: 300px;
+}
+
+.product-right-bottom {
+    grid-column: 2;
+    grid-row: 2;
+    height: 150px;
 }
 
 .product-left {
@@ -223,18 +248,21 @@ body {
     background-size: cover;
     background-position: center;
     position: relative;
+    
 }
 
 .carousel-banner-1 {
-    height: 400px;
+    height: 600px;
     width: 100vw;
     position: relative;
     left: 50%;
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
+    background-size: cover;
+    background-repeat: no-repeat !important;
+    background-position: center;
 }
-
 .banner-content {
     position: absolute;
     bottom: 30px;
@@ -587,6 +615,7 @@ body {
     height: 24px;
 }
 
+
 /* Responsive */
 @media (max-width: 1200px) {
     .banner-section-2345 {
@@ -722,3 +751,32 @@ body {
         flex: 100%;
     }
 }
+
+/* Carrusel 1 (banner principal) */
+.carousel-banner-1 {
+    height: 600px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Carruseles 2-5 con tamaños específicos */
+.banner-left .carousel-banner {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.banner-center .carousel-banner {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.banner-right .carousel-banner {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+

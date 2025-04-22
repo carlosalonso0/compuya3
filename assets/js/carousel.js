@@ -35,6 +35,8 @@ function initCarousel(carouselId, isBanner = false) {
  */
 function setupBannerCarousel(carouselId) {
     const carousel = document.getElementById(carouselId);
+    if (!carousel) return;
+    
     const banners = carousel.querySelectorAll('.carousel-banner');
     if (banners.length <= 1) return;
     
@@ -63,6 +65,7 @@ function setupBannerCarousel(carouselId) {
         const dots = carousel.querySelector('.carousel-dots');
         
         // Reemplazar el contenido con el nuevo contenedor
+        const carouselContent = carousel.innerHTML;
         carousel.innerHTML = '';
         carousel.appendChild(bannerContainer);
         
@@ -83,14 +86,20 @@ function setupBannerCarousel(carouselId) {
     }
     
     // Configurar cambio automático
-    let currentIndex = 0;
-    const autoSlideInterval = setInterval(() => {
-        currentIndex = (currentIndex + 1) % banners.length;
-        changeBannerSlide(carouselId, currentIndex);
-    }, 5000);
+    const dots = carousel.querySelectorAll('.carousel-dots .dot');
+    const totalSlides = dots.length;
     
-    // Guardar referencia al intervalo para detenerlo si es necesario
-    carousel.dataset.slideInterval = autoSlideInterval;
+    if (totalSlides > 1) {
+        // Iniciar rotación automática
+        let currentIndex = 0;
+        const slideInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            changeBannerSlide(carouselId, currentIndex);
+        }, 5000);
+        
+        // Guardar referencia para poder cancelar si es necesario
+        carousel.dataset.slideInterval = slideInterval;
+    }
 }
 
 /**
@@ -100,24 +109,28 @@ function setupBannerCarousel(carouselId) {
  */
 function changeBannerSlide(carouselId, index) {
     const carousel = document.getElementById(carouselId);
+    if (!carousel) return;
+    
     const bannerContainer = carousel.querySelector('.banner-container');
+    if (!bannerContainer) return;
+    
     const banners = bannerContainer.querySelectorAll('.carousel-banner');
     
-    // Ocultar todos los banners con fade
-    banners.forEach(banner => {
-        banner.style.opacity = 0;
+    // Ocultar todos los banners
+    banners.forEach((banner) => {
+        banner.style.opacity = '0';
         setTimeout(() => {
             banner.style.display = 'none';
         }, CAROUSEL_TRANSITION_TIME);
     });
     
-    // Mostrar el banner seleccionado con fade in
+    // Mostrar el banner seleccionado
     const targetBanner = banners[index];
     if (targetBanner) {
         setTimeout(() => {
             targetBanner.style.display = 'block';
             setTimeout(() => {
-                targetBanner.style.opacity = 1;
+                targetBanner.style.opacity = '1';
             }, 50);
         }, CAROUSEL_TRANSITION_TIME);
     }
@@ -135,6 +148,8 @@ function changeBannerSlide(carouselId, index) {
  */
 function setupProductCarousel(carouselId) {
     const carousel = document.getElementById(carouselId);
+    if (!carousel) return;
+    
     const productContainer = carousel.querySelector('.product-carousel');
     if (!productContainer) return;
     
@@ -162,6 +177,8 @@ function setupProductCarousel(carouselId) {
  */
 function moveProductCarousel(carouselId, direction) {
     const carousel = document.getElementById(carouselId);
+    if (!carousel) return;
+    
     const productContainer = carousel.querySelector('.product-carousel');
     if (!productContainer) return;
     
@@ -192,6 +209,7 @@ function moveProductCarousel(carouselId, direction) {
  */
 function setupCarouselControls(carouselId) {
     const carousel = document.getElementById(carouselId);
+    if (!carousel) return;
     
     // Si no hay controles, crearlos
     let controlsContainer = carousel.querySelector('.carousel-controls');
@@ -262,7 +280,10 @@ function setupCarouselControls(carouselId) {
  */
 function setupCarouselDots(carouselId) {
     const carousel = document.getElementById(carouselId);
+    if (!carousel) return;
+    
     const dots = carousel.querySelectorAll('.carousel-dots .dot');
+    if (!dots.length) return;
     
     dots.forEach(dot => {
         dot.addEventListener('click', () => {
@@ -271,14 +292,16 @@ function setupCarouselDots(carouselId) {
             
             // Resetear el intervalo automático para evitar cambios inmediatos
             if (carousel.dataset.slideInterval) {
-                clearInterval(carousel.dataset.slideInterval);
+                clearInterval(parseInt(carousel.dataset.slideInterval));
                 
                 // Reiniciar intervalo
-                carousel.dataset.slideInterval = setInterval(() => {
+                const slideInterval = setInterval(() => {
                     const currentIndex = Array.from(dots).findIndex(d => d.classList.contains('active'));
                     const newIndex = (currentIndex + 1) % dots.length;
                     changeBannerSlide(carouselId, newIndex);
                 }, 5000);
+                
+                carousel.dataset.slideInterval = slideInterval;
             }
         });
     });

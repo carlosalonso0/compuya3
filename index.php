@@ -16,7 +16,9 @@ include_once INCLUDES_PATH . '/header.php';
 
 <!-- Carrusel 1: Banner principal a ancho completo -->
 <div class="banner-section-1">
-    <?php renderizar_carrusel_banners(1); ?>
+    <div id="carousel-1">
+        <?php renderizar_carrusel_banners(1); ?>
+    </div>
 </div>
 
 <!-- Sección con carruseles 2-5 -->
@@ -24,18 +26,26 @@ include_once INCLUDES_PATH . '/header.php';
     <div class="banner-section-2345">
         <!-- Columna izquierda - Carrusel 2 -->
         <div class="banner-left">
-            <?php renderizar_carrusel_banners(2); ?>
+            <div id="carousel-2" class="carousel">
+                <?php renderizar_carrusel_banners(2); ?>
+            </div>
         </div>
         
         <!-- Columna central - Carrusel 3 -->
         <div class="banner-center">
-            <?php renderizar_carrusel_banners(3); ?>
+            <div id="carousel-3">   
+                <?php renderizar_carrusel_banners(3); ?>
+            </div>
         </div>
         
         <!-- Columna derecha - Carruseles 4 y 5 -->
         <div class="banner-right">
-            <?php renderizar_carrusel_banners(4); ?>
-            <?php renderizar_carrusel_banners(5); ?>
+            <div id="carousel-4">
+                <?php renderizar_carrusel_banners(4); ?>
+            </div>
+            <div id="carousel-5">
+                <?php renderizar_carrusel_banners(5); ?>
+            </div>
         </div>
     </div>
 
@@ -45,12 +55,16 @@ include_once INCLUDES_PATH . '/header.php';
         <div class="product-left">
             <!-- Carrusel 6: Ofertas Destacadas -->
             <div class="carousel-6">
-                <?php renderizar_carrusel_productos(6); ?>
+                <div id="carousel-6">
+                    <?php renderizar_carrusel_productos(6); ?>
+                </div>
             </div>
             
             <!-- Carrusel 7: Banner -->
             <div class="carousel-7">
-                <?php renderizar_carrusel_banners(7); ?>
+                <div id="carousel-7">
+                    <?php renderizar_carrusel_banners(7); ?>
+                </div>
             </div>
         </div>
         
@@ -58,12 +72,16 @@ include_once INCLUDES_PATH . '/header.php';
         <div class="product-right">
             <!-- Carrusel 8: Productos (4 a la vez) -->
             <div class="carousel-8">
-                <?php renderizar_carrusel_productos(8); ?>
+                <div id="carousel-8">
+                    <?php renderizar_carrusel_productos(8); ?>
+                </div>
             </div>
             
             <!-- Carrusel 9: Productos (4 a la vez) -->
             <div class="carousel-9">
-                <?php renderizar_carrusel_productos(9); ?>
+                <div id="carousel-9">
+                    <?php renderizar_carrusel_productos(9); ?>
+                </div>
             </div>
         </div>
     </div>
