@@ -77,26 +77,36 @@ if ($es_banner_principal) {
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-    <?php else: ?>
-        <!-- Carrusel de productos -->
-        <div class="product-carousel" id="product-carousel-<?php echo $carrusel_id; ?>">
-            <?php 
-            // Si es el carrusel 6 (ofertas especiales)
-            if ($carrusel_id == 6) {
-                // Mostrar el primer producto con el formato de oferta especial
-                if (!empty($items[0])) {
-                    $producto = $items[0];
-                    include INCLUDES_PATH . '/components/special-offer.php';
+        <?php else: ?>
+            <!-- Carrusel de productos -->
+            <div class="product-carousel <?php echo (count($items) > 4) ? 'full-carousel' : 'few-products'; ?>" id="product-carousel-<?php echo $carrusel_id; ?>">
+                <?php 
+                // Si es el carrusel 6 (ofertas especiales)
+                if ($carrusel_id == 6) {
+                    // Mostrar el primer producto con el formato de oferta especial
+                    if (!empty($items[0])) {
+                        $producto = $items[0];
+                        include INCLUDES_PATH . '/components/special-offer.php';
+                    }
+                } else {
+                    // Para carruseles 8 y 9, mostrar productos con el mismo tamaño fijo
+                    foreach ($items as $producto) {
+                        echo '<div class="product-card-wrapper">';
+                        include INCLUDES_PATH . '/components/product-card.php';
+                        echo '</div>';
+                    }
+                    
+                    // Si hay menos de 4 productos, agregar espacios vacíos para mantener la estructura
+                    $total_items = count($items);
+                    if ($total_items < 4) {
+                        for ($i = 0; $i < (4 - $total_items); $i++) {
+                            echo '<div class="product-card-wrapper empty-space"></div>';
+                        }
+                    }
                 }
-            } else {
-                // Para carruseles 8 y 9, mostrar múltiples productos a la vez
-                foreach ($items as $producto) {
-                    include INCLUDES_PATH . '/components/product-card.php';
-                }
-            }
-            ?>
-        </div>
-    <?php endif; ?>
+                ?>
+            </div>
+        <?php endif; ?>
     
     <?php if (count($items) > 1): ?>
         <!-- Controles de navegación -->

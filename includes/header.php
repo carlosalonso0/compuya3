@@ -11,10 +11,12 @@ require_once INCLUDES_PATH . '/functions.php';
     <title><?php echo SITE_NAME; ?></title>
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/style.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/components.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/fix-carousels.css">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="<?php echo SITE_IMG_URL; ?>/logo/favicon.png">
     <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   
 </head>
 <body>
     <!-- Header y menú principal -->

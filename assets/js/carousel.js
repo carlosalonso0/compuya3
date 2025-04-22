@@ -301,6 +301,7 @@ function moveProductCarousel(carouselId, direction) {
         behavior: 'smooth'
     });
 }
+
 /**
  * Configurar controles de carrusel
  * @param {string} carouselId - ID del carrusel
@@ -447,3 +448,62 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Función para hacer que los carruseles de productos se muevan
+document.addEventListener('DOMContentLoaded', function() {
+    // Configurar carruseles 8 y 9
+    setupProductCarouselControls('carousel-8');
+    setupProductCarouselControls('carousel-9');
+});
+
+function setupProductCarouselControls(carouselId) {
+    const carousel = document.getElementById(carouselId);
+    if (!carousel) return;
+    
+    const items = carousel.querySelectorAll('.product-card-wrapper');
+    if (items.length <= 4) return; // Si hay 4 o menos elementos, no necesitamos controles
+    
+    const prevBtn = carousel.querySelector('.carousel-control.prev');
+    const nextBtn = carousel.querySelector('.carousel-control.next');
+    
+    if (!prevBtn || !nextBtn) return;
+    
+    // Variables para seguimiento
+    let currentPosition = 0;
+    const totalItems = items.length;
+    const visibleItems = 4;
+    
+    // Ocultar todos los productos excepto los primeros 4
+    for (let i = visibleItems; i < totalItems; i++) {
+        items[i].style.display = 'none';
+    }
+    
+    // Función para mostrar los elementos actuales
+    function updateVisibleItems() {
+        // Ocultar todos primero
+        items.forEach(item => {
+            item.style.display = 'none';
+        });
+        
+        // Mostrar solo los 4 elementos actuales
+        for (let i = 0; i < visibleItems; i++) {
+            const index = (currentPosition + i) % totalItems;
+            items[index].style.display = 'block';
+        }
+    }
+    
+    // Configurar botón siguiente
+    nextBtn.addEventListener('click', function() {
+        currentPosition = (currentPosition + 1) % totalItems;
+        updateVisibleItems();
+    });
+    
+    // Configurar botón anterior
+    prevBtn.addEventListener('click', function() {
+        currentPosition = (currentPosition - 1 + totalItems) % totalItems;
+        updateVisibleItems();
+    });
+    
+    // Inicializar
+    updateVisibleItems();
+}

@@ -69,21 +69,18 @@ include_once INCLUDES_PATH . '/header.php';
         </div>
         
         <!-- Columna derecha - Carruseles 8 y 9 -->
-        <div class="product-right">
-            <!-- Carrusel 8: Productos (4 a la vez con bucle) -->
-            <div class="carousel-8">
-                <div id="carousel-8">
-                    <?php renderizar_carrusel_productos(8); ?>
-                </div>
-            </div>
-            
-            <!-- Carrusel 9: Productos (4 a la vez con bucle) -->
-            <div class="carousel-9">
-                <div id="carousel-9">
-                    <?php renderizar_carrusel_productos(9); ?>
-                </div>
-            </div>
+            <!-- Columna derecha - Carruseles 8 y 9 -->
+    <div class="product-right">
+        <!-- Carrusel 8: Productos (4 a la vez con bucle) -->
+        <div class="carousel-8">
+            <?php renderizar_carrusel_productos(8); ?>
         </div>
+        
+        <!-- Carrusel 9: Productos (4 a la vez con bucle) -->
+        <div class="carousel-9">
+            <?php renderizar_carrusel_productos(9); ?>
+        </div>
+    </div>
     </div>
 
     <!-- Sección de ofertas estáticas 10-11 -->

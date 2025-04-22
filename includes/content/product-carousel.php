@@ -5,6 +5,12 @@
  * @param int $carrusel_id ID del carrusel
  * @param string $titulo Título opcional del carrusel
  */
+/**
+ * Renderiza un carrusel de productos
+ * 
+ * @param int $carrusel_id ID del carrusel
+ * @param string $titulo Título opcional del carrusel
+ */
 function renderizar_carrusel_productos($carrusel_id, $titulo = '') {
     global $CARRUSELES_ESPECIALES;
     
@@ -48,7 +54,7 @@ function renderizar_carrusel_productos($carrusel_id, $titulo = '') {
     $total_productos = count($productos);
     
     // Determinar clase de carrusel según cantidad de productos
-    $carousel_class = ($total_productos > 4) ? 'full-carousel' : 'few-products items-' . $total_productos;
+    $carousel_class = ($total_productos > 4) ? 'full-carousel' : 'few-products';
     
     // Mostrar título del carrusel si está definido
     if (!empty($titulo_mostrar)) {
@@ -79,15 +85,17 @@ function renderizar_carrusel_productos($carrusel_id, $titulo = '') {
         // Si hay menos de 4 productos, agregar espacios vacíos para mantener la estructura
         if ($total_productos < 4) {
             for ($i = 0; $i < (4 - $total_productos); $i++) {
-                echo '<div class="product-card-wrapper empty-space"></div>';
+                echo '<div class="product-card-wrapper empty-space">';
+                echo '<div class="product-card" style="visibility: hidden;"></div>';
+                echo '</div>';
             }
         }
     }
     
     echo '</div>'; // .product-carousel
     
-    // Mostrar controles de navegación solo si hay más de 4 productos
-    if ($total_productos > 4) {
+    // Mostrar controles de navegación siempre para los carruseles 8 y 9
+    if ($total_productos > 4 || $carrusel_id == 8 || $carrusel_id == 9) {
         echo '<div class="carousel-controls">';
         echo '<button class="carousel-control prev" data-carousel="carousel-' . $carrusel_id . '">&#10094;</button>';
         echo '<button class="carousel-control next" data-carousel="carousel-' . $carrusel_id . '">&#10095;</button>';
