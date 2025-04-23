@@ -50,26 +50,29 @@ include_once INCLUDES_PATH . '/header.php';
     </div>
 
     <!-- Sección con carruseles 6-9 (Alineados) -->
-    <div class="product-section-6789">
-        <!-- Columna izquierda - Carruseles 6 y 7 -->
-        <div class="product-left">
-            <!-- Carrusel 6: Ofertas Destacadas (misma altura que 8) -->
-            <div class="carousel-6">
-                <div id="carousel-6">
-                    <?php renderizar_carrusel_productos(6); ?>
-                </div>
-            </div>
-            
-            <!-- Carrusel 7: Banner (misma altura que 9) -->
-            <div class="carousel-7">
-                <div id="carousel-7" class="fixed-height-carousel">
-                    <?php renderizar_carrusel_banners(7); ?>
-                </div>
-            </div>
+    <!-- Sección con carruseles 6-9 (Alineados) -->
+<div class="product-section-6789">
+    <!-- Columna izquierda - Carruseles 6 y 7 -->
+    <div class="product-left">
+        <!-- Carrusel 6: Ofertas Destacadas -->
+        <div class="carousel-6">
+            <?php renderizar_carrusel_productos(6); ?>
         </div>
         
-        <!-- Columna derecha - Carruseles 8 y 9 -->
-            <!-- Columna derecha - Carruseles 8 y 9 -->
+        <!-- Carrusel 7: Banner -->
+        <div class="carousel-7">
+            <?php renderizar_carrusel_banners(7); ?>
+        </div>
+        <?php 
+            // Debug temporal
+            echo '<!-- Debug carrusel 7 -->';
+            echo '<pre style="display:none;">';
+            var_dump($carrusel);
+            echo '</pre>';
+        ?>
+    </div>
+    
+    <!-- Columna derecha - Carruseles 8 y 9 -->
     <div class="product-right">
         <!-- Carrusel 8: Productos (4 a la vez con bucle) -->
         <div class="carousel-8">
@@ -81,7 +84,7 @@ include_once INCLUDES_PATH . '/header.php';
             <?php renderizar_carrusel_productos(9); ?>
         </div>
     </div>
-    </div>
+</div>
 
     <!-- Sección de ofertas estáticas 10-11 -->
     <div class="offers-section">
