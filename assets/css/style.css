@@ -1,4 +1,4 @@
-css/* Estilos globales */
+/* Estilos globales */
 * {
     margin: 0;
     padding: 0;
@@ -125,7 +125,7 @@ body {
 /* Contenido principal */
 .main-content {
     min-height: 600px;
-    padding-bottom: 80px; /* Espacio extra al final */
+    padding-bottom: 80px;
 }
 
 /* Secciones de los carruseles */
@@ -172,21 +172,18 @@ body {
 
 .product-section-6789 {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: repeat(2, auto);
+    grid-template-columns: 450px 1fr;
     gap: 15px;
     margin-bottom: 30px;
 }
 
 .product-left {
-    grid-column: 1;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
 .product-right {
-    grid-column: 2;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -207,7 +204,7 @@ body {
     grid-column: 2;
 }
 
-/* Carruseles con tamaño fijo e imágenes ajustadas */
+/* Carruseles con tamaño fijo */
 .fixed-height-carousel {
     position: relative;
     overflow: hidden;
@@ -215,45 +212,56 @@ body {
 
 /* Banner principal (carrusel 1) */
 #carousel-1 {
-    height: 600px; /* Altura fija del banner principal */
+    height: 600px;
     width: 100%;
     position: relative;
     overflow: hidden;
 }
 
-/* Banners secundarios con tamaño fijo */
+/* Banners secundarios */
 .banner-left #carousel-2 {
-    height: 400px; /* Altura fija */
+    height: 400px;
     width: 100%;
 }
 
 .banner-center #carousel-3 {
-    height: 400px; /* Altura fija */
+    height: 400px;
     width: 100%;
 }
 
 .banner-right #carousel-4,
 .banner-right #carousel-5 {
-    height: 190px; /* Altura fija */
+    height: 190px;
     width: 100%;
 }
 
-.carousel-7 #carousel-7 {
-    height: 150px; /* Altura fija */
+/* Carruseles de productos */
+.carousel-6,
+.carousel-7,
+.carousel-8,
+.carousel-9 {
+    height: 420px;
     width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-6,
+.carousel-7 {
+    width: 450px;
 }
 
 /* Contenedor de banners */
 .banner-container {
     position: relative;
-    height: 100% !important;
-    width: 100% !important;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
 }
 
-/* Controlando la forma en que se muestran las imágenes */
+/* Banners */
 .banner-slide {
-    position: absolute !important;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -265,19 +273,18 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    background-size: cover !important; /* La imagen cubrirá todo el contenedor */
-    background-position: center center !important; /* La imagen se centrará */
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
 }
 
-/* Para el banner principal, queremos que se estire al ancho completo */
 .carousel-banner-1 {
     position: relative;
-    width: 100% !important;
-    height: 100% !important;
-    background-size: cover !important;
-    background-position: center center !important;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
 }
 
 /* Carruseles */
@@ -288,27 +295,6 @@ body {
     box-shadow: none;
     height: 100%;
     background: transparent;
-}
-
-.carousel-banner {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-
-.carousel-banner-1 {
-    height: 600px;
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    background-size: cover;
-    background-repeat: no-repeat !important;
-    background-position: center;
 }
 
 .banner-content {
@@ -409,33 +395,20 @@ body {
     background-color: rgba(255, 255, 255, 0.9);
 }
 
-/* Ajustes específicos para los carruseles 6, 8 y 9 */
-.carousel-6, .carousel-7, .carousel-8, .carousel-9 {
-    position: relative;
-    overflow: hidden;
-}
-
-.carousel-6 {
-    height: 300px;
-    margin-bottom: 15px;
-}
-
-.carousel-7 {
-    height: 150px;
-}
-
-.carousel-8 {
-    height: 300px;
-    margin-bottom: 15px;
-}
-
-.carousel-9 {
-    height: 150px;
-}
-
-#carousel-6, #carousel-7, #carousel-8, #carousel-9 {
+/* Carruseles de productos */
+.product-carousel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
     height: 100%;
-    position: relative;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.product-card-wrapper {
+    width: 100%;
+    height: 100%;
 }
 
 /* Oferta especial */
@@ -453,7 +426,7 @@ body {
 
 .offer-image {
     width: 100%;
-    height: 60%;
+    height: 45%;
     background-color: #f0f0f0;
     display: flex;
     align-items: center;
@@ -470,7 +443,7 @@ body {
 
 .offer-content {
     width: 100%;
-    height: 40%;
+    height: 55%;
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -528,191 +501,6 @@ body {
     border-radius: 20px;
     font-weight: bold;
     font-size: 12px;
-}
-
-/* Carruseles de productos con grid fijo */
-
-
-/* Tarjetas de productos */
-.product-card {
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    border: 1px solid #e8e8e8;
-    transition: transform 0.3s, box-shadow 0.3s;
-    display: flex;
-    flex-direction: column;
-    scroll-snap-align: start;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 10px;
-    background-color: #f9f9f9;
-    font-size: 10px;
-}
-
-.reference-text {
-    color: #888888;
-}
-
-.brand-name {
-    color: #222222;
-    font-weight: bold;
-}
-
-.product-image-container {
-    height: 40%;
-    min-height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    background-color: white;
-    overflow: hidden;
-    text-decoration: none;
-}
-
-.product-image {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s;
-}
-
-.product-card:hover .product-image {
-    transform: scale(1.05);
-}
-
-.separator {
-    position: relative;
-    height: 10px;
-    margin-bottom: 5px;
-}
-
-.separator::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(to right, #e53935 50px, transparent 50px);
-}
-
-.social-tag {
-    position: absolute;
-    right: 10px;
-    bottom: 0;
-    color: #e53935;
-    font-size: 8px;
-}
-
-.product-info {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    font-size: 12px;
-}
-
-.product-name {
-    color: #333333;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 8px;
-    line-height: 1.2;
-    height: 40px;
-    overflow: hidden;
-}
-
-.product-name a {
-    color: #333333;
-    text-decoration: none;
-}
-
-.product-name a:hover {
-    color: #e53935;
-}
-
-.price-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.current-price {
-    color: #e53935;
-    font-size: 14px;
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-.original-price {
-    color: #999999;
-    font-size: 12px;
-    text-decoration: line-through;
-}
-
-.promo-tag {
-    display: inline-block;
-    background-color: #ffebee;
-    color: #e53935;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-}
-
-.stock-info {
-    font-size: 10px;
-    color: #666666;
-    margin-bottom: 8px;
-}
-
-.stock-number {
-    font-weight: bold;
-}
-
-.stock-disponible {
-    color: #4caf50;
-}
-
-.sin-stock {
-    color: #f44336;
-}
-
-.btn-add-cart {
-    display: inline-block;
-    width: 100%;
-    padding: 6px 10px;
-    background-color: #e53935;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: auto;
-}
-
-.btn-add-cart:hover {
-    background-color: #c62828;
-}
-
-.btn-add-cart.disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
 }
 
 /* Tarjetas de ofertas estáticas (secciones 10-11) */
@@ -784,49 +572,6 @@ body {
     border-radius: 4px;
     display: inline-block;
     margin-bottom: 15px;
-}
-
-/* Ajustes específicos para los carruseles 8 y 9 */
-/* Carrusel 8 */
-.carousel-8 .product-card {
-    height: 100%;
-}
-
-.carousel-8 .product-image-container {
-    height: 150px;
-}
-
-/* Carrusel 9 */
-.carousel-9 .product-card {
-    height: 100%;
-}
-
-.carousel-9 .product-image-container {
-    height: 60px;
-}
-
-.carousel-9 .product-name {
-    height: 30px;
-    font-size: 11px;
-    margin-bottom: 5px;
-}
-
-.carousel-9 .price-container {
-    margin-bottom: 5px;
-}
-
-.carousel-9 .current-price {
-    font-size: 12px;
-}
-
-.carousel-9 .stock-info {
-    margin-bottom: 5px;
-    font-size: 9px;
-}
-
-.carousel-9 .btn-add-cart {
-    padding: 4px 8px;
-    font-size: 10px;
 }
 
 /* Footer */
@@ -914,45 +659,6 @@ body {
     height: 24px;
 }
 
-/* Carruseles de productos con grid fijo */
-.product-carousel {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    height: 100%;
-    width: 100%;
-    overflow-x: auto;
-    padding: 10px 0;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.product-carousel::-webkit-scrollbar {
-    display: none;
-}
-
-/* Para carruseles con menos de 4 productos */
-.product-carousel.few-products {
-    grid-template-columns: repeat(4, 1fr);
-}
-
-.product-carousel.few-products .empty-space {
-    visibility: hidden;
-}
-
-/* Para carruseles con más de 4 productos */
-.product-carousel.full-carousel {
-    grid-auto-flow: column;
-    grid-auto-columns: 25%;
-}
-
-/* Tarjetas de productos */
-.product-card-wrapper {
-    width: 100%;
-    height: 100%;
-}
-
 /* Responsive */
 @media (max-width: 1200px) {
     .banner-section-2345 {
@@ -961,7 +667,12 @@ body {
     }
     
     .product-section-6789 {
-        grid-template-columns: 1fr 1.5fr;
+        grid-template-columns: 400px 1fr;
+    }
+    
+    .carousel-6,
+    .carousel-7 {
+        width: 400px;
     }
 }
 
@@ -1013,6 +724,11 @@ body {
         grid-column: 1;
     }
     
+    .carousel-6,
+    .carousel-7 {
+        width: 100%;
+    }
+    
     .product-carousel {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1060,24 +776,6 @@ body {
         font-size: 20px;
     }
     
-    .special-offer-card {
-        flex-direction: column;
-        height: auto;
-    }
-    
-    .offer-image, .offer-content {
-        width: 100%;
-    }
-    
-    .static-offer {
-        flex-direction: column;
-        height: auto;
-    }
-    
-    .static-offer-image, .static-offer-content {
-        width: 100%;
-    }
-    
     .product-carousel {
         grid-template-columns: repeat(1, 1fr);
     }
@@ -1087,87 +785,4 @@ body {
     .footer-column {
         flex: 100%;
     }
-}
-
-/* Carruseles de productos */
-.product-carousel {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    scroll-snap-type: x mandatory;
-    padding: 10px 0;
-    width: 100%;
-}
-
-.product-carousel::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-}
-
-.product-carousel.full-carousel {
-    grid-auto-flow: column;
-    grid-auto-columns: calc(25% - 11.25px); /* 25% - (3/4 * 15px gap) */
-}
-
-.product-card-wrapper {
-    scroll-snap-align: start;
-    min-width: 0;
-}
-
-/* Ajuste específico para el carrusel 8 */
-#carousel-8 .product-carousel,
-#carousel-9 .product-carousel {
-    height: auto !important;
-    overflow: hidden !important;
-    max-width: 100%;
-}
-
-.carousel-8, .carousel-9 {
-    height: auto !important;
-    overflow: visible !important;
-}
-
-/* Para que las tarjetas tengan el mismo tamaño */
-.product-card {
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Para carruseles específicos */
-#carousel-8, #carousel-9 {
-    overflow: hidden !important;
-}
-
-/* Ajustes específicos para carruseles 8 y 9 */
-.carousel-8 .product-card,
-.carousel-9 .product-card {
-    height: 100%;
-    min-height: 350px; /* Establecer una altura mínima igual para ambos */
-}
-
-.product-card-wrapper {
-    height: 100%;
-    min-width: 0;
-}
-
-/* Forzar el mismo tamaño para todos los productos */
-.product-carousel .product-card-wrapper {
-    width: calc(25% - 12px);
-    box-sizing: border-box;
-}
-
-/* Asegurar que la info del producto tenga espacio suficiente */
-.product-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Asegurar que los contenedores tengan altura fija */
-.carousel-8, .carousel-9 {
-    height: auto !important;
-    margin-bottom: 20px;
 }

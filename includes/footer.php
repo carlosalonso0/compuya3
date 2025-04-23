@@ -1,5 +1,4 @@
 </main>
-    <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-top">
             <div class="container">
@@ -53,115 +52,8 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="<?php echo SITE_URL; ?>/assets/js/main.js"></script>
     <script src="<?php echo SITE_URL; ?>/assets/js/carousel.js"></script>
-    
-    <!-- Script para controlar carruseles de productos -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const carruseles = ['carousel-8', 'carousel-9'];
-        
-        carruseles.forEach(function(carouselId) {
-            const carousel = document.getElementById(carouselId);
-            if (!carousel) return;
-            
-            const container = carousel.querySelector('.product-carousel');
-            if (!container) return;
-            
-            const productos = container.querySelectorAll('.product-card-wrapper');
-            const totalProductos = productos.length;
-            
-            // Si hay 4 o menos productos, ocultar controles
-            if (totalProductos <= 4) {
-                const controles = carousel.querySelector('.carousel-controls');
-                if (controles) controles.style.display = 'none';
-                return;
-            }
-            
-            // Ocultar productos después del 4to
-            for (let i = 4; i < totalProductos; i++) {
-                productos[i].style.display = 'none';
-            }
-            
-            // Configurar botones
-            const btnPrev = carousel.querySelector('.carousel-control.prev');
-            const btnNext = carousel.querySelector('.carousel-control.next');
-            
-            if (!btnPrev || !btnNext) return;
-            
-            let posicion = 0;
-            
-            btnNext.addEventListener('click', function() {
-                // Ocultar el producto actual
-                productos[posicion].style.display = 'none';
-                
-                // Mostrar el siguiente producto
-                const siguientePos = (posicion + 4) % totalProductos;
-                productos[siguientePos].style.display = '';
-                
-                // Actualizar posición
-                posicion = (posicion + 1) % totalProductos;
-            });
-            
-            btnPrev.addEventListener('click', function() {
-                // Calcular posición anterior
-                const posAnterior = (posicion - 1 + totalProductos) % totalProductos;
-                
-                // Ocultar el último visible
-                const ultimoVisible = (posicion + 3) % totalProductos;
-                productos[ultimoVisible].style.display = 'none';
-                
-                // Mostrar el anterior
-                productos[posAnterior].style.display = '';
-                
-                // Actualizar posición
-                posicion = posAnterior;
-            });
-        });
-    });
-    </script>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Forzar alineación de carruseles 7 y 9
-    const carousel7 = document.querySelector('.carousel-7');
-    const carousel9 = document.querySelector('.carousel-9');
-    
-    if (carousel7 && carousel9) {
-        // Obtener la posición del carrusel 9
-        const rect9 = carousel9.getBoundingClientRect();
-        const rect7 = carousel7.getBoundingClientRect();
-        
-        // Calcular la diferencia
-        const difference = rect9.top - rect7.top;
-        
-        // Ajustar la posición del carrusel 7
-        if (difference !== 0) {
-            carousel7.style.marginTop = difference + 'px';
-        }
-    }
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Diagnóstico
-    const carousel7 = document.querySelector('.carousel-7');
-    const carousel9 = document.querySelector('.carousel-9');
-    
-    if (carousel7 && carousel9) {
-        console.log('Carrusel 7:', carousel7.getBoundingClientRect());
-        console.log('Carrusel 9:', carousel9.getBoundingClientRect());
-        
-        // Verificar estilos computados
-        const style7 = window.getComputedStyle(carousel7);
-        const style9 = window.getComputedStyle(carousel9);
-        
-        console.log('Margin-top carrusel 7:', style7.marginTop);
-        console.log('Margin-top carrusel 9:', style9.marginTop);
-        console.log('Padding-top carrusel 7:', style7.paddingTop);
-        console.log('Padding-top carrusel 9:', style9.paddingTop);
-    }
-});
-</script>
+    <script src="<?php echo SITE_URL; ?>/assets/js/carousel-navigation.js"></script>
 </body>
 </html>
