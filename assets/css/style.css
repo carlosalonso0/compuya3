@@ -1,3 +1,48 @@
+/* Arreglos para imágenes - añade esto al inicio de assets/css/style.css */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Arreglar banners */
+.carousel-banner {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}
+
+/* Arreglar imágenes de productos */
+.product-image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Asegurar que los banners se muestren */
+.banner-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    display: block;
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -8,17 +53,31 @@
 body {
     background-color: #ffffff;
     color: #333;
-    padding-bottom: 30px;
+    min-width: 320px;
 }
 
 .container {
     max-width: 1400px;
     width: 90%;
     margin: 0 auto;
-    padding: 0;
+    padding: 0 15px;
 }
 
 .main-content {
     min-height: 600px;
     padding-bottom: 80px;
+}
+
+/* Media queries base */
+@media (max-width: 1200px) {
+    .container {
+        width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 0 10px;
+    }
 }

@@ -537,3 +537,34 @@ function fixBannerRendering() {
 document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', fixBannerRendering);
 });
+
+// Al final del archivo, agrega esta función para manejar los carruseles en móviles
+function adjustCarouselsForMobile() {
+    if (window.innerWidth <= 768) {
+        // Ajustar carruseles de productos para móviles
+        const carousel8 = document.getElementById('carousel-8');
+        const carousel9 = document.getElementById('carousel-9');
+        
+        if (carousel8 && carousel9) {
+            const products8 = carousel8.querySelectorAll('.product-card-wrapper');
+            const products9 = carousel9.querySelectorAll('.product-card-wrapper');
+            
+            // Mostrar solo 2 productos a la vez en móviles
+            products8.forEach((product, index) => {
+                product.style.display = index < 2 ? 'block' : 'none';
+            });
+            
+            products9.forEach((product, index) => {
+                product.style.display = index < 2 ? 'block' : 'none';
+            });
+        }
+    }
+}
+
+// Añadir al evento DOMContentLoaded y resize
+document.addEventListener('DOMContentLoaded', function() {
+    // ... código existente ...
+    adjustCarouselsForMobile();
+});
+
+window.addEventListener('resize', adjustCarouselsForMobile);

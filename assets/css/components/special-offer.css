@@ -6,7 +6,7 @@
 
 .special-offer-card {
     width: 100%;
-    height: 430px;
+    height: 100%;
     background-color: #ffffff;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
     overflow: hidden;
@@ -14,6 +14,49 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    /* Remover cualquier división */
     margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .special-offer-card {
+        height: 350px;
+    }
+    
+    .offer-image {
+        height: 45%;
+        min-height: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .special-offer-card {
+        height: 320px;
+    }
+    
+    .offer-title {
+        font-size: 16px;
+    }
+    
+    .countdown-number {
+        font-size: 14px;
+    }
+    
+    .current-price {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .special-offer-card {
+        height: 300px;
+    }
+    
+    .offer-content {
+        padding: 10px;
+    }
+    
+    .countdown-container {
+        padding: 8px;
+    }
 }
