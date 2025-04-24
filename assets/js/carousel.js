@@ -212,35 +212,22 @@ function setupProductCarousel(carouselId) {
     const productContainer = carousel.querySelector('.product-carousel');
     if (!productContainer) return;
     
-    // Para carrusel 6 (oferta especial), no hacer nada más
+    // Para carrusel 6, no hacer nada
     if (carouselId === 'carousel-6') return;
-    
-    // Verificar la cantidad de productos
-    const productCards = productContainer.querySelectorAll('.product-card');
-    const productCount = productCards.length;
-    
-    // Si hay menos de 5 productos, no necesitamos controles ni scroll
-    if (productCount <= 4) {
-        const controls = carousel.querySelector('.carousel-controls');
-        if (controls) controls.style.display = 'none';
-        
-        // Ajustar el contenedor para que no permita scroll
-        productContainer.style.overflowX = 'hidden';
-        return;
-    }
     
     // Hacer que el scroll sea suave
     productContainer.style.scrollBehavior = 'smooth';
     
-    // Asegurar que solo se muestren 4 productos a la vez
+    // Obtener el ancho del contenedor
     const containerWidth = productContainer.clientWidth;
-    const cardWidth = containerWidth / 4;
+    const cardWidth = 220; // Ancho fijo de 220px
     
     // Establecer anchos exactos a cada tarjeta de producto
+    const productCards = productContainer.querySelectorAll('.product-card');
     productCards.forEach(card => {
-        card.style.flex = `0 0 ${cardWidth - 15}px`;
-        card.style.width = `${cardWidth - 15}px`;
-        card.style.maxWidth = `${cardWidth - 15}px`;
+        card.style.width = `${cardWidth}px`;
+        card.style.flex = `0 0 ${cardWidth}px`;
+        card.style.maxWidth = `${cardWidth}px`;
     });
 }
 
@@ -507,3 +494,46 @@ function setupProductCarouselControls(carouselId) {
     // Inicializar
     updateVisibleItems();
 }
+
+// Forzar repintado del banner al cargar
+window.addEventListener('resize', function() {
+    const banner1 = document.getElementById('carousel-1');
+    if (banner1) {
+        banner1.style.display = 'none';
+        setTimeout(() => {
+            banner1.style.display = '';
+        }, 0);
+    }
+});
+
+// Forzar repintado del banner principal en caso de renderizado inestable
+function stabilizeBannerRendering() {
+    const banner1 = document.getElementById('carousel-1');
+    if (!banner1) return;
+
+    const observer = new ResizeObserver(() => {
+        banner1.style.display = 'none';
+        setTimeout(() => {
+            banner1.style.display = '';
+        }, 50);
+    });
+
+    observer.observe(banner1);
+}
+
+document.addEventListener('DOMContentLoaded', stabilizeBannerRendering);}
+
+function fixBannerRendering() {
+    const banner1 = document.getElementById('carousel-1');
+    if (!banner1) return;
+
+    // Forzar repintado
+    banner1.style.display = 'none';
+    requestAnimationFrame(() => {
+        banner1.style.display = '';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('resize', fixBannerRendering);
+});

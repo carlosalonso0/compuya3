@@ -76,6 +76,11 @@
     background-repeat: no-repeat;
 }
 
+/* Ajuste para banner del carrusel 7 */
+#carousel-7 .carousel-banner {
+    background-size: contain;
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
     .banner-section-2345 {

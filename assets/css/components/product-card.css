@@ -1,7 +1,7 @@
 /* Tarjeta de producto estándar */
 .product-card {
-    width: 100%;
-    height: 430px; /* Aumentado para que todo quepa */
+    width: 220px; /* Ancho fijo para todas las tarjetas */
+    height: 430px; 
     background-color: #ffffff;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
     overflow: hidden;
@@ -9,6 +9,13 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    margin: 0 auto; /* Centrar la tarjeta */
+}
+
+.product-card-wrapper {
+    width: 220px; /* Ancho fijo para los wrappers */
+    display: flex;
+    justify-content: center;
 }
 
 .card-header {
@@ -19,7 +26,7 @@
 }
 
 .product-image-container {
-    height: 150px; /* Aumentado */
+    height: 150px;
     padding: 10px;
     display: flex;
     align-items: center;
@@ -41,3 +48,4 @@
     overflow: hidden;
     margin-bottom: 10px;
 }
+
