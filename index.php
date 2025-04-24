@@ -49,8 +49,7 @@ include_once INCLUDES_PATH . '/header.php';
         </div>
     </div>
 
-    <!-- Sección con carruseles 6-9 (Alineados) -->
-    <!-- Sección con carruseles 6-9 (Alineados) -->
+<!-- Sección con carruseles 6-9 (Alineados) -->
 <div class="product-section-6789">
     <!-- Columna izquierda - Carruseles 6 y 7 -->
     <div class="product-left">
@@ -63,23 +62,16 @@ include_once INCLUDES_PATH . '/header.php';
         <div class="carousel-7">
             <?php renderizar_carrusel_banners(7); ?>
         </div>
-        <?php 
-            // Debug temporal
-            echo '<!-- Debug carrusel 7 -->';
-            echo '<pre style="display:none;">';
-            var_dump($carrusel);
-            echo '</pre>';
-        ?>
     </div>
     
     <!-- Columna derecha - Carruseles 8 y 9 -->
     <div class="product-right">
-        <!-- Carrusel 8: Productos (4 a la vez con bucle) -->
+        <!-- Carrusel 8: Productos -->
         <div class="carousel-8">
             <?php renderizar_carrusel_productos(8); ?>
         </div>
         
-        <!-- Carrusel 9: Productos (4 a la vez con bucle) -->
+        <!-- Carrusel 9: Productos -->
         <div class="carousel-9">
             <?php renderizar_carrusel_productos(9); ?>
         </div>

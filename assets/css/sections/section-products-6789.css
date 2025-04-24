@@ -1,0 +1,67 @@
+/* Sección de productos y ofertas */
+.product-section-6789 {
+    display: grid;
+    grid-template-columns: 450px 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.product-left,
+.product-right {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Altura exacta para todos los carruseles */
+.carousel-6,
+.carousel-7,
+.carousel-8,
+.carousel-9 {
+    height: 450px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Carruseles de la izquierda */
+.carousel-6,
+.carousel-7 {
+    width: 450px;
+}
+
+/* Grid de productos para carruseles 8 y 9 */
+.carousel-8 .product-carousel,
+.carousel-9 .product-carousel {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* Columnas iguales */
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Oferta especial - Carrusel 6 */
+.carousel-6 .product-carousel {
+    display: block; /* No grid */
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Banner del carrusel 7 */
+#carousel-7 .banner-container {
+    width: 100%;
+    height: 100%;
+}
+
+#carousel-7 .carousel-banner {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
