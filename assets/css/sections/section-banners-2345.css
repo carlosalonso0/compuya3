@@ -8,19 +8,19 @@
 }
 
 .banner-left {
-    width: 100%;
+    grid-column: 1;
     height: 100%;
 }
 
 .banner-center {
-    width: 100%;
+    grid-column: 2;
     height: 100%;
 }
 
 .banner-right {
+    grid-column: 3;
     display: flex;
     flex-direction: column;
-    width: 100%;
     height: 100%;
     gap: 15px;
 }
@@ -32,6 +32,7 @@
     width: 100%;
     position: relative;
     overflow: hidden;
+    background-color: #ffffff;
 }
 
 #carousel-2,
@@ -49,103 +50,80 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    background-color: #ffffff;
 }
 
-.banner-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.carousel-banner {
+/* Usar contain solo para banners 4 y 5 */
+#carousel-4 .carousel-banner,
+#carousel-5 .carousel-banner {
     position: absolute !important;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    background-size: contain !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
 }
 
-/* Carruseles 2 y 3: cover para mantener aspecto */
+/* Cover para los demás */
 #carousel-2 .carousel-banner,
 #carousel-3 .carousel-banner {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
 }
 
-/* Carruseles 4 y 5: estirar para llenar */
-#carousel-4 .carousel-banner,
-#carousel-5 .carousel-banner {
-    background-size: 100% 100% !important;
-}
-
-/* Responsive */
+/* Responsive para móviles */
 @media (max-width: 768px) {
     .banner-section-2345 {
         grid-template-columns: 1fr;
+        grid-template-rows: auto;
         height: auto;
         gap: 15px;
     }
     
     .banner-left,
-    .banner-center {
-        height: 250px;
+    .banner-center,
+    .banner-right {
+        grid-column: auto;
         width: 100%;
     }
     
+    .banner-left,
+    .banner-center {
+        height: 250px;
+    }
+    
     .banner-right {
-        flex-direction: row;
-        justify-content: center;
+        height: 300px;
+        flex-direction: column;
         gap: 15px;
-        padding: 0 20px;
-        height: 180px;
     }
     
     #carousel-4,
     #carousel-5 {
-        width: 45%;
-        height: 100%;
+        height: calc(50% - 7.5px);
     }
 }
 
-/* Controles dentro de la imagen */
-.carousel-controls {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px;
-    z-index: 10;
-}
-
-.carousel-control {
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 20px;
-    opacity: 0.7;
-    transition: opacity 0.3s;
-}
-
-.carousel-control:hover {
-    opacity: 1;
-}
-
-.carousel-dots {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-    z-index: 10;
+@media (max-width: 480px) {
+    .banner-left,
+    .banner-center {
+        height: 200px;
+    }
+    
+    .banner-right {
+        height: 260px;
+    }
+    
+    #carousel-4,
+    #carousel-5 {
+        height: calc(50% - 7.5px);
+    }
 }
