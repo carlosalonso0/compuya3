@@ -31,8 +31,9 @@ $clase_principal = $es_principal ? 'carousel-banner-1' : '';
 // Añadir CSS para transiciones y posicionamiento de la imagen
 $style = "
     background-image: url('{$imagen_url}');
-    background-size: cover;
+    background-size: contain;
     background-position: {$posicion_img};
+    background-repeat: no-repeat;
     width: 100%;
     height: 100%;
     transition: opacity {$CAROUSEL_TRANSITION_TIME}ms ease;

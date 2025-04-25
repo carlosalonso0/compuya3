@@ -1,4 +1,4 @@
-/* Sección de banners 2-5 */
+/* assets/css/sections/section-banners-2345.css */
 .banner-section-2345 {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
@@ -7,26 +7,24 @@
     height: 400px;
 }
 
-/* Contenedores principales */
 .banner-left {
-    grid-column: 1;
+    width: 100%;
     height: 100%;
 }
 
 .banner-center {
-    grid-column: 2;
+    width: 100%;
     height: 100%;
 }
 
 .banner-right {
-    grid-column: 3;
     display: flex;
     flex-direction: column;
+    width: 100%;
     height: 100%;
-    justify-content: space-between;
+    gap: 15px;
 }
 
-/* Carruseles individuales */
 #carousel-2,
 #carousel-3,
 #carousel-4,
@@ -34,7 +32,6 @@
     width: 100%;
     position: relative;
     overflow: hidden;
-    background-color: #f5f5f5;
 }
 
 #carousel-2,
@@ -47,112 +44,108 @@
     height: calc(50% - 7.5px);
 }
 
-/* Contenedores de banners */
 .banner-container {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #f5f5f5;
 }
 
-/* Slides */
 .banner-slide {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    transition: opacity 500ms ease;
 }
 
-/* Banners */
 .carousel-banner {
     position: absolute !important;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
 }
 
-/* Ajuste para banner del carrusel 7 */
-#carousel-7 .carousel-banner {
-    background-size: contain;
+/* Carruseles 2 y 3: cover para mantener aspecto */
+#carousel-2 .carousel-banner,
+#carousel-3 .carousel-banner {
+    background-size: cover !important;
+}
+
+/* Carruseles 4 y 5: estirar para llenar */
+#carousel-4 .carousel-banner,
+#carousel-5 .carousel-banner {
+    background-size: 100% 100% !important;
 }
 
 /* Responsive */
-@media (max-width: 1200px) {
-    .banner-section-2345 {
-        grid-template-columns: 1fr 1.5fr 1fr;
-        height: 350px;
-    }
-}
-
-@media (max-width: 992px) {
-    .banner-section-2345 {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto;
-        height: auto;
-        gap: 15px;
-    }
-    
-    .banner-left,
-    .banner-center {
-        height: 250px;
-    }
-    
-    .banner-right {
-        grid-column: 1 / -1;
-        flex-direction: row;
-        height: 200px;
-        gap: 15px;
-    }
-    
-    #carousel-4,
-    #carousel-5 {
-        width: calc(50% - 7.5px);
-        height: 100%;
-    }
-    
-    .banner-container {
-        height: 100% !important;
-    }
-}
-
 @media (max-width: 768px) {
     .banner-section-2345 {
         grid-template-columns: 1fr;
-        gap: 10px;
+        height: auto;
+        gap: 15px;
     }
     
     .banner-left,
     .banner-center {
         height: 250px;
+        width: 100%;
     }
     
     .banner-right {
-        flex-direction: column;
-        height: auto;
+        flex-direction: row;
+        justify-content: center;
+        gap: 15px;
+        padding: 0 20px;
+        height: 180px;
     }
     
     #carousel-4,
     #carousel-5 {
-        width: 100%;
-        height: 200px;
+        width: 45%;
+        height: 100%;
     }
 }
 
-@media (max-width: 480px) {
-    .banner-left,
-    .banner-center {
-        height: 200px;
-    }
-    
-    #carousel-4,
-    #carousel-5 {
-        height: 150px;
-    }
+/* Controles dentro de la imagen */
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    z-index: 10;
+}
+
+.carousel-control {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.carousel-control:hover {
+    opacity: 1;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
 }
