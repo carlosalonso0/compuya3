@@ -53,3 +53,34 @@
         max-height: 130px;
     }
 }
+
+
+/* Agregar a assets/css/sections/section-banner-1.css o style.css */
+.banner-section-1 {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+#carousel-1 {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+#carousel-1 .banner-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 27.08%; /* Ratio original mantenido */
+}
+
+#carousel-1 .carousel-banner {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}

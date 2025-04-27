@@ -81,3 +81,39 @@ body {
         padding: 0 10px;
     }
 }
+
+
+
+/* Agregar al final de assets/css/style.css para sobrescribir cualquier conflicto */
+
+/* Asegurar que no haya fondos grises */
+.banner-container,
+.carousel-banner,
+.banner-section-2345,
+.banner-left,
+.banner-center,
+.banner-right,
+#carousel-2,
+#carousel-3,
+#carousel-4,
+#carousel-5 {
+    background-color: transparent !important;
+}
+
+/* Corregir el comportamiento de las imágenes */
+.carousel-banner {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+}
+
+/* Sobrescribir cualquier estilo conflictivo de background-size */
+.banner-section-2345 .carousel-banner {
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}

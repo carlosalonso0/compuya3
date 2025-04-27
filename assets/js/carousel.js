@@ -568,3 +568,50 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('resize', adjustCarouselsForMobile);
+
+// Añadir al final de assets/js/carousel.js
+document.addEventListener('DOMContentLoaded', function() {
+    // Detectar orientación de imágenes
+    function detectImageOrientation() {
+        const banners = document.querySelectorAll('.carousel-banner');
+        
+        banners.forEach(banner => {
+            // Obtener la URL de la imagen desde el background-image
+            const bgImage = window.getComputedStyle(banner).backgroundImage;
+            const imageUrl = bgImage.replace(/url\(['"]?([^'"]+)['"]?\)/, '$1');
+            
+            if (imageUrl && imageUrl !== 'none') {
+                const img = new Image();
+                img.onload = function() {
+                    if (this.width > this.height) {
+                        banner.setAttribute('data-orientation', 'landscape');
+                    } else {
+                        banner.setAttribute('data-orientation', 'portrait');
+                    }
+                };
+                img.src = imageUrl;
+            }
+        });
+    }
+    
+    // Ejecutar la detección
+    detectImageOrientation();
+    
+    // Re-ejecutar cuando cambien los slides
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && 
+                (mutation.attributeName === 'style' || mutation.attributeName === 'class')) {
+                detectImageOrientation();
+            }
+        });
+    });
+    
+    document.querySelectorAll('.banner-container').forEach(container => {
+        observer.observe(container, { 
+            attributes: true, 
+            subtree: true, 
+            attributeFilter: ['style', 'class'] 
+        });
+    });
+});

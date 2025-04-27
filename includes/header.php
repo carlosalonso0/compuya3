@@ -31,6 +31,7 @@ require_once INCLUDES_PATH . '/functions.php';
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/sections/section-offers-1011.css">
 
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/sections/section-header.css">
+    
 
     
     <link rel="icon" type="image/png" href="<?php echo SITE_IMG_URL; ?>/logo/favicon.png">

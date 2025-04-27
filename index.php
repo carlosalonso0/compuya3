@@ -23,31 +23,31 @@ include_once INCLUDES_PATH . '/header.php';
 
 <!-- Sección con carruseles 2-5 -->
 <div class="container">
-    <div class="banner-section-2345">
-            <!-- Columna izquierda - Carrusel 2 -->
-            <div class="banner-left">
-                <div id="carousel-2" class="fixed-height-carousel">
-                    <?php renderizar_carrusel_banners(2); ?>
-                </div>
-            </div>
-            
-            <!-- Columna central - Carrusel 3 -->
-            <div class="banner-center">
-                <div id="carousel-3" class="fixed-height-carousel">   
-                    <?php renderizar_carrusel_banners(3); ?>
-                </div>
-            </div>
-            
-            <!-- Columna derecha - Carruseles 4 y 5 -->
-            <div class="banner-right">
-                <div id="carousel-4" class="fixed-height-carousel">
-                    <?php renderizar_carrusel_banners(4); ?>
-                </div>
-                <div id="carousel-5" class="fixed-height-carousel">
-                    <?php renderizar_carrusel_banners(5); ?>
-                </div>
+<div class="banner-section-2345">
+        <!-- Columna izquierda - Carrusel 2 -->
+        <div class="banner-left">
+            <div id="carousel-2" class="fixed-height-carousel">
+                <?php renderizar_carrusel_banners(2); ?>
             </div>
         </div>
+        
+        <!-- Columna central - Carrusel 3 -->
+        <div class="banner-center">
+            <div id="carousel-3" class="fixed-height-carousel">   
+                <?php renderizar_carrusel_banners(3); ?>
+            </div>
+        </div>
+        
+        <!-- Columna derecha - Carruseles 4 y 5 -->
+        <div class="banner-right">
+            <div id="carousel-4" class="fixed-height-carousel">
+                <?php renderizar_carrusel_banners(4); ?>
+            </div>
+            <div id="carousel-5" class="fixed-height-carousel">
+                <?php renderizar_carrusel_banners(5); ?>
+            </div>
+        </div>
+    </div>
 
 <!-- Sección con carruseles 6-9 (Alineados) -->
 <div class="product-section-6789">

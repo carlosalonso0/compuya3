@@ -1,74 +1,56 @@
 /* assets/css/sections/section-banners-2345.css */
 .banner-section-2345 {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 28fr 56fr 16fr;
     gap: 15px;
     margin-bottom: 30px;
-    height: 400px;
-}
-
-.banner-left {
-    grid-column: 1;
-    height: 100%;
-}
-
-.banner-center {
-    grid-column: 2;
-    height: 100%;
-}
-
-.banner-right {
-    grid-column: 3;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    gap: 15px;
-}
-
-#carousel-2,
-#carousel-3,
-#carousel-4,
-#carousel-5 {
     width: 100%;
-    position: relative;
-    overflow: hidden;
-    background-color: #ffffff;
+    align-items: stretch;
 }
 
+.banner-left,
+.banner-center,
+.banner-right {
+    position: relative;
+    width: 100%;
+}
+
+/* Altura fija para carruseles principales */
 #carousel-2,
 #carousel-3 {
-    height: 100%;
+    position: relative;
+    width: 100%;
+    height: 300px; /* Altura fija */
+}
+
+/* Columna derecha con 2 carruseles apilados */
+.banner-right {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 300px; /* Misma altura total */
 }
 
 #carousel-4,
 #carousel-5 {
-    height: calc(50% - 7.5px);
-}
-
-.banner-container {
     position: relative;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: #ffffff;
+    height: calc((300px - 15px) / 2); /* Mitad de altura menos gap */
 }
 
-/* Usar contain solo para banners 4 y 5 */
-#carousel-4 .carousel-banner,
-#carousel-5 .carousel-banner {
-    position: absolute !important;
+/* Contenedores de banners */
+.banner-container {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: contain !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
+    overflow: hidden;
+    background-color: #ffffff;
 }
 
-/* Cover para los demás */
-#carousel-2 .carousel-banner,
-#carousel-3 .carousel-banner {
+/* Estilo de banners */
+.carousel-banner {
     position: absolute !important;
     top: 0;
     left: 0;
@@ -79,51 +61,60 @@
     background-repeat: no-repeat !important;
 }
 
-/* Responsive para móviles */
+/* Responsive */
 @media (max-width: 768px) {
     .banner-section-2345 {
         grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        height: auto;
         gap: 15px;
     }
     
-    .banner-left,
-    .banner-center,
+    #carousel-2,
+    #carousel-3 {
+        height: 350px; /* Altura más grande en móvil */
+    }
+    
+    /* Carruseles 4 y 5 en fila horizontal deslizable */
     .banner-right {
-        grid-column: auto;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        padding-bottom: 10px;
         width: 100%;
-    }
-    
-    .banner-left,
-    .banner-center {
-        height: 250px;
-    }
-    
-    .banner-right {
-        height: 300px;
-        flex-direction: column;
-        gap: 15px;
+        height: auto;
     }
     
     #carousel-4,
     #carousel-5 {
-        height: calc(50% - 7.5px);
+        flex: 0 0 80%;
+        min-width: 280px;
+        max-width: 300px;
+        height: 280px; /* Altura más grande en móvil */
+        margin-right: 15px;
+    }
+    
+    #carousel-5 {
+        margin-right: 0;
     }
 }
 
-@media (max-width: 480px) {
-    .banner-left,
-    .banner-center {
-        height: 200px;
-    }
-    
-    .banner-right {
-        height: 260px;
-    }
-    
-    #carousel-4,
-    #carousel-5 {
-        height: calc(50% - 7.5px);
-    }
+/* Custom scrollbar */
+.banner-right::-webkit-scrollbar {
+    height: 6px;
+}
+
+.banner-right::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.banner-right::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.banner-right::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
