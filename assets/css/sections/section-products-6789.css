@@ -2,7 +2,7 @@
 .product-section-6789 {
     display: grid;
     grid-template-columns: 450px 1fr;
-    gap: 30px;
+    gap: 40px;
     margin-bottom: 30px;
 }
 
@@ -10,57 +10,108 @@
 .product-left {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 40px;
 }
 
 /* Columna derecha */
 .product-right {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 40px;
+}
+
+/* Forzar alineación de títulos */
+.product-section-6789 h2,
+.product-section-6789 h3,
+.product-section-6789 .section-title {
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+    height: 24px !important;
+    line-height: 24px !important;
+    padding: 0 !important;
 }
 
 /* Alineación de 6 con 8 */
-.carousel-6,
-.carousel-8 {
-    height: 450px;
+.carousel-6 {
+    height: 400px;
     width: 100%;
     position: relative;
     box-sizing: border-box;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Eliminar espacio entre contenedor y tarjeta en carrusel 6 */
+.carousel-6 > div {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.carousel-8 {
+    height: 400px;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    overflow: visible;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Eliminar espacio entre contenedor y tarjetas en carrusel 8 */
+.carousel-8 .product-carousel {
+    margin: 0 !important;
+    padding: 10px !important;
 }
 
 /* Alineación de 7 con 9 */
 .carousel-7 {
-    height: 250px;
+    height: 360px;
     width: 100%;
     position: relative;
     box-sizing: border-box;
+    overflow: hidden;
+}
+
+.carousel-7 .banner-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-7 .carousel-banner {
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
 }
 
 .carousel-9 {
-    height: auto;
-    min-height: 250px;
+    height: 360px;
     width: 100%;
     position: relative;
     box-sizing: border-box;
+    overflow: visible;
 }
 
 /* Grid de productos para carruseles 8 y 9 */
 .carousel-8 .product-carousel,
 .carousel-9 .product-carousel {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
     gap: 15px;
     width: 100%;
-    height: 100%;
-    padding: 10px;
+    height: auto;
+    min-height: 340px;
     box-sizing: border-box;
+    overflow: visible;
 }
 
 /* Responsive */
 @media (max-width: 1200px) {
     .product-section-6789 {
         grid-template-columns: 380px 1fr;
+        gap: 35px;
     }
     
     .carousel-6,
@@ -74,9 +125,17 @@
     }
 }
 
+/* Para casos de zoom extremo */
+@media (min-width: 1600px) {
+    .product-section-6789 {
+        grid-template-columns: 30% 1fr;
+    }
+}
+
 @media (max-width: 992px) {
     .product-section-6789 {
         grid-template-columns: 1fr;
+        gap: 30px;
     }
     
     .carousel-6,
@@ -86,23 +145,20 @@
     
     .carousel-6 {
         height: 380px;
-        margin-bottom: 0; /* Eliminar margen para evitar overlap */
+        margin-bottom: 0;
     }
     
     .carousel-7 {
         height: 180px;
-        margin-top: 40px; /* Agregar margen superior para separar de 6 */
-        position: relative;
-        z-index: 1;
+        margin-top: 40px;
     }
     
     .carousel-8 {
-        height: 320px;
+        height: 360px;
     }
     
     .carousel-9 {
-        height: auto;
-        min-height: 180px;
+        height: 360px;
     }
     
     .carousel-8 .product-carousel,
@@ -112,31 +168,35 @@
 }
 
 @media (max-width: 768px) {
+    .carousel-6, .carousel-7, .carousel-8, .carousel-9 {
+        height: auto !important;
+        min-height: 340px;
+        overflow: visible;
+    }
+    
     .carousel-8 .product-carousel,
     .carousel-9 .product-carousel {
         grid-template-columns: repeat(2, 1fr);
-        padding: 5px;
-    }
-    
-    .carousel-8 .product-card,
-    .carousel-9 .product-card {
-        width: 100%;
+        padding: 10px;
     }
 }
 
 @media (max-width: 480px) {
     .carousel-6 {
-        height: 340px;
+        height: auto;
+        min-height: 340px;
+        overflow: visible;
     }
     
     .carousel-7 {
         height: 150px;
-        margin-top: 40px; /* Mantener separación */
     }
     
     .carousel-8,
     .carousel-9 {
         height: auto;
+        min-height: 380px;
+        overflow: visible;
     }
     
     .carousel-8 .product-carousel,

@@ -37,36 +37,6 @@ $texto_stock = $tiene_stock ? $stock . ' en Stock' : 'Agotado';
 $clase_stock = $tiene_stock ? 'stock-disponible' : 'sin-stock';
 ?>
 
-<style>
-.product-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-}
-</style>
-<style>
-.product-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-    min-height: 350px; /* Altura mínima fija */
-}
-
-/* Hacer que el botón siempre esté al fondo */
-.product-info {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.btn-add-cart {
-    margin-top: auto;
-}
-</style>
 
 <div class="product-card">
     <div class="card-header">

@@ -6,7 +6,7 @@
 
 .special-offer-card {
     width: 100%;
-    height: 100%;
+    height: 340px;
     background-color: #ffffff;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
     overflow: hidden;
@@ -17,39 +17,146 @@
     margin: 0 auto;
 }
 
+.offer-image {
+    width: 100%;
+    height: 40%;
+    min-height: 120px;
+    max-height: 140px;
+    background-color: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.offer-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.offer-content {
+    width: 100%;
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.offer-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #e53935;
+    margin-bottom: 8px;
+}
+
+.offer-description {
+    margin-bottom: 8px;
+    line-height: 1.3;
+    font-size: 13px;
+}
+
+.countdown-container {
+    background-color: #f9f9f9;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+.countdown {
+    display: flex;
+    justify-content: space-between;
+}
+
+.countdown-item {
+    text-align: center;
+}
+
+.countdown-number {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.countdown-label {
+    font-size: 9px;
+    color: #666;
+}
+
+.price-container {
+    margin-bottom: 12px;
+}
+
+.current-price {
+    color: #e53935;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.original-price {
+    color: #999999;
+    font-size: 14px;
+    text-decoration: line-through;
+    margin-left: 5px;
+}
+
+.btn-add-cart {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    background-color: #e53935;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: auto;
+    font-size: 13px;
+}
+
+.btn-add-cart:hover {
+    background-color: #c62828;
+}
+
+.btn-add-cart.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.offer-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #e53935;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
 /* Responsive */
 @media (max-width: 992px) {
     .special-offer-card {
-        height: 350px;
-    }
-    
-    .offer-image {
-        height: 45%;
-        min-height: 150px;
+        height: 340px;
     }
 }
 
 @media (max-width: 768px) {
     .special-offer-card {
-        height: 320px;
-    }
-    
-    .offer-title {
-        font-size: 16px;
-    }
-    
-    .countdown-number {
-        font-size: 14px;
-    }
-    
-    .current-price {
-        font-size: 20px;
+        height: 340px;
+        overflow: visible;
     }
 }
 
 @media (max-width: 480px) {
     .special-offer-card {
-        height: 300px;
+        height: 340px;
+        overflow: visible;
     }
     
     .offer-content {
@@ -57,6 +164,10 @@
     }
     
     .countdown-container {
-        padding: 8px;
+        padding: 5px;
+    }
+    
+    .offer-title {
+        font-size: 14px;
     }
 }
