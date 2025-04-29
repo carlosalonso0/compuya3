@@ -3,12 +3,34 @@
     background-color: transparent;
     width: 100%;
     height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .carousel-7 .carousel-banner {
-    background-size: cover !important;
+    background-size: contain !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
     width: 100%;
     height: 100%;
+}
+
+/* En responsive, asegurar que el banner ocupe todo el espacio disponible */
+@media (max-width: 992px) {
+    .carousel-7 .banner-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    
+    .carousel-7 .carousel-banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 }

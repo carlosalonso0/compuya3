@@ -100,7 +100,9 @@ if ($es_banner_principal) {
                     $total_items = count($items);
                     if ($total_items < 4) {
                         for ($i = 0; $i < (4 - $total_items); $i++) {
-                            echo '<div class="product-card-wrapper empty-space"></div>';
+                            echo '<div class="product-card-wrapper empty-space">';
+                            echo '<div class="product-card" style="visibility: hidden;"></div>';
+                            echo '</div>';
                         }
                     }
                 }

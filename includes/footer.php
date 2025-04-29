@@ -53,6 +53,6 @@
     </footer>
     <script src="<?php echo SITE_URL; ?>/assets/js/main.js"></script>
     <script src="<?php echo SITE_URL; ?>/assets/js/carousel.js"></script>
-    <script src="<?php echo SITE_URL; ?>/assets/js/carousel-navigation.js"></script>
+    <script src="<?php echo SITE_URL; ?>/assets/js/section-6789.js"></script>
 </body>
 </html>

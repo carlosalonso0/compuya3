@@ -205,3 +205,24 @@
         max-height: 70px;
     }
 }
+
+/* Tarjetas de productos en carruseles 8 y 9 */
+.carousel-8 .product-card-wrapper,
+.carousel-9 .product-card-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.carousel-8 .product-card,
+.carousel-9 .product-card {
+    width: 100%;
+    height: 340px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* Forzar mismo ancho para todas las tarjetas incluso con zoom */
+.product-card-wrapper {
+    display: flex;
+    flex-direction: column;
+}

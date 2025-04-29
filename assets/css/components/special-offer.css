@@ -29,6 +29,7 @@
     padding: 10px;
     overflow: hidden;
     box-sizing: border-box;
+    margin-top: 10px;
 }
 
 .offer-image img {
