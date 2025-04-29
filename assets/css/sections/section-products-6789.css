@@ -4,7 +4,6 @@
     grid-template-columns: 450px 1fr;
     gap: 40px;
     margin-bottom: 30px;
-    border: 1px solid #e0e0e0; /* Borde temporal para visualización */
     overflow: hidden; /* Asegura que nada se salga del contenedor principal */
     padding: 20px; /* Añadimos padding para evitar que el contenido toque los bordes */
 }
@@ -14,7 +13,6 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    border: 1px solid #2196f3; /* Borde temporal azul */
 }
 
 /* Columna derecha (carruseles 8 y 9) */
@@ -22,7 +20,6 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    border: 1px solid #4caf50; /* Borde temporal verde */
     overflow: hidden; /* Evitar que las tarjetas se salgan */
 }
 
@@ -30,14 +27,12 @@
 .carousel-6 {
     height: 400px;
     width: 100%;
-    border: 1px solid #f44336; /* Borde temporal rojo */
     overflow: hidden;
 }
 
 .carousel-7 {
     height: 360px;
     width: 100%;
-    border: 1px solid #9c27b0; /* Borde temporal púrpura */
     overflow: hidden;
     position: relative;
 }
@@ -45,14 +40,12 @@
 .carousel-8 {
     height: 400px;
     width: 100%;
-    border: 1px solid #ff9800; /* Borde temporal naranja */
     overflow: hidden; /* Cambiado a hidden para contener las tarjetas */
 }
 
 .carousel-9 {
     height: 400px;
     width: 100%;
-    border: 1px solid #795548; /* Borde temporal marrón */
     overflow: hidden; /* Cambiado a hidden para contener las tarjetas */
 }
 
