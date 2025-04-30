@@ -61,42 +61,53 @@
     background-repeat: no-repeat !important;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* Modificación: Alinear imágenes para cada carrusel específico */
+#carousel-4 .carousel-banner {
+    background-position: bottom center !important;
+}
+
+#carousel-5 .carousel-banner {
+    background-position: top center !important;
+}
+
+/* MEDIA QUERY PARA ZOOM ALTO: 200% hasta 500% aproximadamente */
+@media (max-width: 960px) {
+    .banner-section-2345 {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 15px;
+    }
+    
+    .banner-left, 
+    .banner-center {
+        width: 100%;
+    }
+    
+    /* Ocultar la columna derecha con los carruseles 4 y 5 */
+    .banner-right {
+        display: none !important;
+    }
+
+    #carousel-2,
+    #carousel-3 {
+        height: 100px;
+    }
+}
+
+/* Responsive para móviles reales de pantalla muy pequeña */
+@media (max-width: 320px) {
     .banner-section-2345 {
         grid-template-columns: 1fr;
         gap: 15px;
     }
     
+    .banner-left,
+    .banner-center {
+        width: 100%;
+    }
+    
     #carousel-2,
     #carousel-3 {
-        height: 200px; /* Altura más grande en móvil */
-    }
-    
-    /* Carruseles 4 y 5 en fila horizontal deslizable */
-    .banner-right {
-        display: flex;
-        flex-direction: row;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-        padding-bottom: 10px;
-        width: 100%;
-        height: auto;
-    }
-    
-    #carousel-4,
-    #carousel-5 {
-        flex: 0 0 80%;
-        min-width: 280px;
-        max-width: 300px;
-        height: 280px; /* Altura más grande en móvil */
-        margin-right: 15px;
-    }
-    
-    #carousel-5 {
-        margin-right: 0;
+        height: 90px;
     }
 }
 
