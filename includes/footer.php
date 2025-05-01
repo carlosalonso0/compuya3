@@ -58,5 +58,6 @@
     <script src="<?php echo SITE_URL; ?>/assets/js/carousel.js"></script>
     <script src="<?php echo SITE_URL; ?>/assets/js/section-6789.js"></script>
     <script src="<?php echo SITE_URL; ?>/assets/js/header.js"></script>
+    
 </body>
 </html>

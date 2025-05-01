@@ -71,25 +71,47 @@ require_once INCLUDES_PATH . '/functions_categories.php';
                 <button class="new-mobile-menu-toggle"><i class="fas fa-bars"></i></button>
                 
                 <ul class="new-main-menu-items">
-                    <li><a href="<?php echo SITE_URL; ?>">Inicio</a></li>
                     <li class="new-has-submenu">
                         <a href="#">Categorías</a>
                         <div class="new-submenu">
-                            <!-- Componentes con su propio submenú -->
-                            <div class="new-submenu-item new-has-submenu">
-                                <a href="<?php echo SITE_URL; ?>/categoria/componentes">Componentes</a>
-                                <div class="new-submenu">
-                                    <a href="<?php echo SITE_URL; ?>/categoria/cases">Cases</a>
-                                    <a href="<?php echo SITE_URL; ?>/categoria/placas-madre">Placas Madre</a>
-                                    <a href="<?php echo SITE_URL; ?>/categoria/procesadores">Procesadores</a>
-                                    <a href="<?php echo SITE_URL; ?>/categoria/tarjetas-graficas">Tarjetas Gráficas</a>
-                                </div>
-                            </div>
-                            <!-- Categorías principales sin submenú -->
-                            <a href="<?php echo SITE_URL; ?>/categoria/impresoras">Impresoras</a>
-                            <a href="<?php echo SITE_URL; ?>/categoria/laptops">Laptops</a>
-                            <a href="<?php echo SITE_URL; ?>/categoria/monitores">Monitores</a>
-                            <a href="<?php echo SITE_URL; ?>/categoria/pc-gamers">PC Gamers</a>
+                            <ul class="submenu-list">
+                                <?php
+                                require_once INCLUDES_PATH . '/functions_categories.php';
+                                // Obtener la categoría 'Componentes' y sus subcategorías
+                                $componentes = null;
+                                $categorias_principales = [];
+                                $todas_categorias = get_parent_categories();
+                                foreach ($todas_categorias as $cat) {
+                                    if (strtolower($cat['nombre']) === 'componentes') {
+                                        $componentes = $cat;
+                                    } else if (in_array(strtolower($cat['nombre']), ['impresoras','laptops','monitores','pc gamers','pc gamer','pc-gamers','pc-gamer'])) {
+                                        $categorias_principales[] = $cat;
+                                    }
+                                }
+                                ?>
+                                <li class="has-submenu-right">
+                                    <?php if ($componentes): ?>
+                                        <a href="<?php echo SITE_URL . '/categoria/' . $componentes['slug']; ?>">Componentes</a>
+                                        <ul class="submenu-right">
+                                            <?php
+                                            $componentes_subcats = get_subcategories($componentes['id']);
+                                            if (!empty($componentes_subcats)) {
+                                                foreach ($componentes_subcats as $subcat) {
+                                                    echo '<li><a href="' . SITE_URL . '/categoria/' . $subcat['slug'] . '">' . htmlspecialchars($subcat['nombre']) . '</a></li>';
+                                                }
+                                            } else {
+                                                echo '<li style="color:#888;padding:10px 18px;">No hay componentes disponibles</li>';
+                                            }
+                                            ?>
+                                        </ul>
+                                    <?php else: ?>
+                                        <span style="color:#888;padding:10px 18px;">Componentes (no existe)</span>
+                                    <?php endif; ?>
+                                </li>
+                                <?php foreach ($categorias_principales as $cat): ?>
+                                    <li><a href="<?php echo SITE_URL . '/categoria/' . $cat['slug']; ?>"><?php echo htmlspecialchars($cat['nombre']); ?></a></li>
+                                <?php endforeach; ?>
+                            </ul>
                         </div>
                     </li>
                     <li><a href="<?php echo SITE_URL; ?>/ofertas.php" class="new-highlight">Ofertas</a></li>
