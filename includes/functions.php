@@ -208,64 +208,7 @@ function verificar_crear_ruta($ruta) {
 /**
  * Generar SKU según formato predefinido
  */
-function generar_sku($tipo, $marca, $serie, $modelo, $extra) {
-    $formatos = [
-        'tarjeta_grafica' => 'TG-[MARCA2L]-[SERIE]-[MEMORIA]-[ID3D]',
-        'procesador' => 'CPU-[MARCA1L]-[SERIE]-[MODELO]-[ID3D]',
-        'case' => 'CASE-[MARCA2L]-[MODELO]-[COLOR2L]-[ID3D]',
-        'laptop' => 'LT-[MARCA2L]-[SERIE2L]-[TAMAÑO]-[ID3D]',
-        'pc_gamer' => 'PC-[NIVEL]-[CPU2L]-[GPU2L]-[RAM]-[ID3D]',
-        'impresora' => 'IMP-[MARCA2L]-[SERIE]-[TIPO2L]-[ID3D]',
-        'placa_madre' => 'MB-[MARCA2L]-[SERIE2L]-[CHIPSET]-[ID3D]',
-        'monitor' => 'MON-[MARCA2L]-[SERIE2L]-[TAMAÑO]-[ID3D]'
-    ];
-    
-    // Generar ID único de 3 caracteres alfanuméricos
-    $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    $id3d = '';
-    for ($i = 0; $i < 3; $i++) {
-        $id3d .= $chars[rand(0, strlen($chars) - 1)];
-    }
-    
-    // Reemplazar marcadores según formato
-    $sku = $formatos[$tipo];
-    $sku = str_replace('[MARCA2L]', substr($marca, 0, 2), $sku);
-    $sku = str_replace('[MARCA1L]', substr($marca, 0, 1), $sku);
-    $sku = str_replace('[SERIE]', $serie, $sku);
-    $sku = str_replace('[SERIE2L]', substr($serie, 0, 2), $sku);
-    $sku = str_replace('[MODELO]', $modelo, $sku);
-    $sku = str_replace('[ID3D]', $id3d, $sku);
-    
-    // Reemplazar campos específicos por tipo
-    switch ($tipo) {
-        case 'tarjeta_grafica':
-            $sku = str_replace('[MEMORIA]', $extra['memoria'], $sku);
-            break;
-        case 'case':
-            $sku = str_replace('[COLOR2L]', substr($extra['color'], 0, 2), $sku);
-            break;
-        case 'laptop':
-            $sku = str_replace('[TAMAÑO]', $extra['tamano'], $sku);
-            break;
-        case 'pc_gamer':
-            $sku = str_replace('[NIVEL]', $extra['nivel'], $sku);
-            $sku = str_replace('[CPU2L]', $extra['cpu'], $sku);
-            $sku = str_replace('[GPU2L]', $extra['gpu'], $sku);
-            $sku = str_replace('[RAM]', $extra['ram'], $sku);
-            break;
-        case 'impresora':
-            $sku = str_replace('[TIPO2L]', substr($extra['tipo'], 0, 2), $sku);
-            break;
-        case 'placa_madre':
-            $sku = str_replace('[CHIPSET]', $extra['chipset'], $sku);
-            break;
-        case 'monitor':
-            $sku = str_replace('[TAMAÑO]', $extra['tamano'], $sku);
-            break;
-    }
-    
-    return strtoupper($sku);
-}
+
 /**
  * Obtener información de una marca por su ID
  */

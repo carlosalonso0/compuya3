@@ -40,7 +40,6 @@ require_once INCLUDES_PATH . '/functions_categories.php';
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/sections/section-banners-2345.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/sections/section-products-6789.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/sections/section-offers-1011.css">
-    
 
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/sections/section-brands.css">
 

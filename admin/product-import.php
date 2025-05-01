@@ -177,21 +177,8 @@ function generateSlug($text) {
 }
 
 // Función para generar SKU 
+// Función para generar SKU 
 function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
-    // Determinar tipo de producto por categoría
-    $tipo_producto = '';
-    switch ($categoria_id) {
-        case 2: $tipo_producto = 'tarjeta_grafica'; break;
-        case 3: $tipo_producto = 'procesador'; break; 
-        case 4: $tipo_producto = 'case'; break;
-        case 6: $tipo_producto = 'laptop'; break;
-        case 7: $tipo_producto = 'pc_gamer'; break;
-        case 8: $tipo_producto = 'impresora'; break;
-        case 5: $tipo_producto = 'placa_madre'; break;
-        case 9: $tipo_producto = 'monitor'; break;
-        default: $tipo_producto = 'otro';
-    }
-    
     // Obtener marca
     $marca = '';
     $sql = "SELECT nombre FROM marcas WHERE id = ?";
@@ -200,87 +187,99 @@ function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
         $marca = $marca_result['nombre'];
     }
     
-    // Extraer información para el SKU
-    $extra = [];
+    // Abreviaturas de marca
+    $marca2L = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $marca), 0, 2));
+    $marca1L = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $marca), 0, 1));
     
-    // Construir extra según el tipo de producto
-    switch ($tipo_producto) {
-        case 'tarjeta_grafica':
-            // Extraer memoria de la descripción o nombre
-            preg_match('/(\d+)GB/', $nombre, $matches);
-            $extra['memoria'] = isset($matches[1]) ? $matches[1].'G' : '00G';
-            break;
+    switch ($categoria_id) {
+        case 2: // Tarjetas Gráficas
+            // Extraer serie y memoria directamente de formato definido
+            preg_match('/(RTX|GTX|RX)\s*(\d+)/', $nombre, $matches_serie);
+            preg_match('/(\d+)GB/', $nombre, $matches_memoria);
             
-        case 'pc_gamer':
-            $extra['nivel'] = 'STD';
-            if (stripos($nombre, 'extreme') !== false) $extra['nivel'] = 'XTR';
-            if (stripos($nombre, 'gaming') !== false) $extra['nivel'] = 'GMR';
+            $serie = !empty($matches_serie[0]) ? str_replace(' ', '', $matches_serie[0]) : '';
+            $memoria = !empty($matches_memoria[1]) ? $matches_memoria[1] : '8';
             
-            // Extraer CPU
-            preg_match('/(i[3579]|RYZEN|R[3579])/', $nombre, $matches);
-            $extra['cpu'] = isset($matches[1]) ? $matches[1] : 'CPU';
+            return "TG-{$marca2L}-{$serie}-{$memoria}G";
             
-            // Extraer GPU
-            preg_match('/(GTX|RTX|RX)\s*(\d+)/', $nombre, $matches);
-            $extra['gpu'] = isset($matches[0]) ? str_replace(' ', '', $matches[0]) : 'GPU';
+        case 3: // Procesadores
+            // Extraer generación y modelo
+            preg_match('/Core i\d-(\d+)/', $nombre, $matches_modelo);
+            preg_match('/(\d+)G/', $nombre, $matches_gen);
             
-            // Extraer RAM
-            preg_match('/(\d+)GB/', $nombre, $matches);
-            $extra['ram'] = isset($matches[1]) ? $matches[1].'G' : '00G';
-            break;
+            $generacion = !empty($matches_gen[1]) ? $matches_gen[1] : '14';
+            $modelo_cpu = !empty($matches_modelo[1]) ? $matches_modelo[1] : '';
             
-        case 'monitor':
-            // Extraer tamaño
-            preg_match('/(\d+(\.\d+)?)\"/', $nombre, $matches);
-            $extra['tamano'] = isset($matches[1]) ? $matches[1] : '00';
-            break;
+            return "PR-{$marca1L}-{$generacion}G-{$modelo_cpu}";
             
-        case 'case':
-            $extra['color'] = 'NE'; // Negro por defecto
-            if (stripos($nombre, 'blanc') !== false) $extra['color'] = 'BL';
-            if (stripos($nombre, 'roj') !== false) $extra['color'] = 'RO';
-            break;
+        case 4: // Cases
+            // Extraer modelo y tipo
+            preg_match('/(\d+[A-Z]*)/', $nombre, $matches_modelo);
+            $modelo_case = !empty($matches_modelo[1]) ? $matches_modelo[1] : '';
+            $tipo = strpos(strtolower($nombre), 'mid') !== false ? 'M' : 'F';
             
-        // Otros tipos de producto...
-    }
-    
-    // Generar ID único aleatorio
-    $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    $id3d = '';
-    for ($i = 0; $i < 3; $i++) {
-        $id3d .= $chars[rand(0, strlen($chars) - 1)];
-    }
-    
-    // Generar SKU básico según tipo
-    $marca2L = substr(preg_replace('/[^A-Za-z0-9]/', '', $marca), 0, 2);
-    $modelo_clean = preg_replace('/[^A-Za-z0-9]/', '', $modelo);
-    
-    $sku = '';
-    switch ($tipo_producto) {
-        case 'tarjeta_grafica':
-            $sku = "TG-{$marca2L}-{$modelo_clean}-{$extra['memoria']}-{$id3d}";
-            break;
-        case 'procesador':
-            $sku = "CPU-" . substr($marca2L, 0, 1) . "-{$modelo_clean}-{$id3d}";
-            break;
-        case 'case':
-            $sku = "CASE-{$marca2L}-{$modelo_clean}-{$extra['color']}-{$id3d}";
-            break;
-        case 'monitor':
-            $sku = "MON-{$marca2L}-{$modelo_clean}-{$extra['tamano']}-{$id3d}";
-            break;
-        case 'pc_gamer':
-            $sku = "PC-{$extra['nivel']}-{$extra['cpu']}-{$extra['gpu']}-{$extra['ram']}-{$id3d}";
-            break;
+            return "CS-{$marca2L}-{$modelo_case}-{$tipo}";
+            
+        case 5: // Placas Madre
+            // Extraer chipset y socket
+            preg_match('/(Z\d+|B\d+|H\d+|X\d+)/', $nombre, $matches_chipset);
+            preg_match('/(LGA\d+|AM\d+)/', $nombre, $matches_socket);
+            
+            $chipset = !empty($matches_chipset[1]) ? $matches_chipset[1] : '';
+            $socket = !empty($matches_socket[1]) ? $matches_socket[1] : '';
+            
+            return "PM-{$marca2L}-{$chipset}-{$socket}";
+            
+        case 6: // Laptops
+            // Extraer serie y procesador
+            preg_match('/(ROG|TUF|Legion|Predator)/', $nombre, $matches_serie);
+            preg_match('/(R\d|i\d)-?(\d+)?/', $nombre, $matches_proc);
+            
+            $serie = !empty($matches_serie[1]) ? $matches_serie[1] : '';
+            $procesador = !empty($matches_proc[0]) ? $matches_proc[0] : '';
+            $procesador_format = strtoupper(substr(str_replace('-', '', $procesador), 0, 3));
+            
+            return "LP-{$marca2L}-{$serie}-{$procesador_format}";
+            
+        case 7: // PC Gamers
+            // Extraer nivel, procesador y GPU
+            $nivel = strpos($nombre, 'Xtreme') !== false ? 'X' : 
+                (strpos($nombre, 'Pro') !== false ? 'P' : 'G');
+            
+            preg_match('/(i\d)-(\d+)/', $nombre, $matches_proc);
+            preg_match('/(RTX|GTX|RX)\s*(\d+)/', $nombre, $matches_gpu);
+            
+            $procesador = !empty($matches_proc[0]) ? str_replace('-', '', $matches_proc[0]) : 'I9';
+            $procesador_format = strtoupper(substr($procesador, 0, 3));
+            $gpu = !empty($matches_gpu[0]) ? str_replace(' ', '', $matches_gpu[0]) : '';
+            
+            return "PC-{$nivel}-{$procesador_format}-{$gpu}";
+            
+        case 8: // Impresoras
+            // Extraer modelo y tipo
+            preg_match('/(\d+)/', $nombre, $matches_modelo);
+            $modelo_imp = !empty($matches_modelo[1]) ? $matches_modelo[1] : '';
+            $tipo = (strpos(strtolower($nombre), 'multifun') !== false || 
+                    strpos(strtolower($nombre), 'smart tank') !== false) ? 'M' : 'S';
+            
+            return "IP-{$marca2L}-{$tipo}-{$modelo_imp}";
+            
+        case 9: // Monitores
+            // Extraer tamaño y Hz
+            preg_match('/(\d+)["\'"]/', $nombre, $matches_tam);
+            preg_match('/(\d+)Hz/', $nombre, $matches_hz);
+            
+            $tamanho = !empty($matches_tam[1]) ? $matches_tam[1] : '27';
+            $hz = !empty($matches_hz[1]) ? $matches_hz[1] : '165';
+            
+            return "MN-{$marca2L}-{$tamanho}P-{$hz}";
+            
         default:
-            $sku = strtoupper($tipo_producto) . "-{$marca2L}-{$modelo_clean}-{$id3d}";
+            // Para otras categorías
+            return strtoupper("{$categoria_id}-{$marca2L}-{$modelo}");
     }
-    
-    // Normalizar SKU (eliminar caracteres no deseados)
-    $sku = preg_replace('/[^A-Z0-9\-]/', '', strtoupper($sku));
-    
-    return $sku;
 }
+
 
 // Función para traducir códigos de error de upload
 function getUploadError($code) {
