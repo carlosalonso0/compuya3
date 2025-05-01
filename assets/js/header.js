@@ -3,24 +3,40 @@
  */
 document.addEventListener('DOMContentLoaded', function() {
     // Menú móvil toggle
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
-    const mainMenu = document.querySelector('.main-menu-items');
+    const menuToggle = document.querySelector('.new-mobile-menu-toggle');
+    const mainMenu = document.querySelector('.new-main-menu-items');
     
     if (menuToggle && mainMenu) {
-        menuToggle.addEventListener('click', function() {
+        menuToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             mainMenu.classList.toggle('active');
         });
     }
     
     // Manejo de submenús en móvil
-    const hasSubmenu = document.querySelectorAll('.has-submenu');
+    const hasSubmenu = document.querySelectorAll('.new-has-submenu');
     hasSubmenu.forEach(item => {
         const link = item.querySelector('a');
-        if (link && window.innerWidth <= 768) {
+        if (link) {
+            // Para móviles
             link.addEventListener('click', function(e) {
                 if (window.innerWidth <= 768) {
                     e.preventDefault();
                     item.classList.toggle('active');
+                }
+            });
+            
+            // Desplegar componentes en hover para escritorio
+            item.addEventListener('mouseenter', function() {
+                if (window.innerWidth > 768) {
+                    this.classList.add('hover');
+                }
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                if (window.innerWidth > 768) {
+                    this.classList.remove('hover');
                 }
             });
         }
@@ -42,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         const count = cartItems.length;
         
-        const cartCountElement = document.querySelector('.cart-count');
+        const cartCountElement = document.querySelector('.new-cart-count');
         if (cartCountElement) {
             cartCountElement.textContent = count;
         }

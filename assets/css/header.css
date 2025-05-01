@@ -245,6 +245,19 @@
     display: none !important;
 }
 
+/* En header.css */
+.new-site-header .new-container {
+    display: flex;
+    /* otros estilos... */
+}
+
+/* Y en product.css y search.css */
+.product-page .new-container,
+.search-results-page .new-container,
+.category-page .new-container {
+    display: block;
+}
+
 /* Responsive */
 .new-mobile-menu-toggle {
     display: none;
