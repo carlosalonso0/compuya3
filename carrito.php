@@ -84,7 +84,7 @@ include_once INCLUDES_PATH . '/header.php';
 ?>
 
 <div class="cart-page">
-    <div class="new-container">
+    <div class="new-container cart-wrapper">
         <div class="page-header">
             <h1 class="page-title">Carrito de Compras</h1>
         </div>
@@ -105,84 +105,93 @@ include_once INCLUDES_PATH . '/header.php';
                 <a href="<?php echo SITE_URL; ?>" class="btn-continue-shopping">Continuar comprando</a>
             </div>
         <?php else: ?>
-            <div class="cart-container">
-                <div class="cart-items">
-                    <div class="cart-header">
-                        <div class="cart-col product-col">Producto</div>
-                        <div class="cart-col price-col">Precio</div>
-                        <div class="cart-col quantity-col">Cantidad</div>
-                        <div class="cart-col subtotal-col">Subtotal</div>
-                        <div class="cart-col actions-col">Acciones</div>
-                    </div>
-                    
-                    <?php foreach ($cart_items as $item): ?>
-                        <div class="cart-item">
-                            <div class="cart-col product-col">
-                                <div class="product-info">
-                                    <div class="product-image">
-                                        <img src="<?php echo get_imagen_producto($item['id']); ?>" alt="<?php echo htmlspecialchars($item['nombre']); ?>">
-                                    </div>
-                                    <div class="product-details">
-                                        <h3 class="product-title">
-                                            <a href="<?php echo SITE_URL; ?>/producto/<?php echo $item['slug']; ?>">
-                                                <?php echo htmlspecialchars($item['nombre']); ?>
-                                            </a>
-                                        </h3>
-                                        <?php if (!empty($item['sku'])): ?>
-                                            <div class="product-sku">SKU: <?php echo htmlspecialchars($item['sku']); ?></div>
-                                        <?php endif; ?>
-                                    </div>
+            <!-- Productos del carrito -->
+            <div class="cart-items">
+                <div class="cart-header">
+                    <div class="cart-col product-col">Producto</div>
+                    <div class="cart-col price-col">Precio</div>
+                    <div class="cart-col quantity-col">Cantidad</div>
+                    <div class="cart-col subtotal-col">Subtotal</div>
+                    <div class="cart-col actions-col">Acciones</div>
+                </div>
+                
+                <?php foreach ($cart_items as $item): ?>
+                    <div class="cart-item">
+                        <div class="cart-col product-col">
+                            <div class="product-info">
+                                <div class="product-image">
+                                    <img src="<?php echo get_imagen_producto($item['id']); ?>" alt="<?php echo htmlspecialchars($item['nombre']); ?>">
                                 </div>
-                            </div>
-                            
-                            <div class="cart-col price-col">
-                                <?php if ($item['precio_oferta'] > 0 && $item['en_oferta']): ?>
-                                    <div class="product-price">
-                                        <span class="price"><?php echo formatear_precio($item['precio_oferta']); ?></span>
-                                        <span class="original-price"><?php echo formatear_precio($item['precio']); ?></span>
-                                    </div>
-                                <?php else: ?>
-                                    <div class="product-price">
-                                        <span class="price"><?php echo formatear_precio($item['precio']); ?></span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            
-                            <div class="cart-col quantity-col">
-                                <div class="quantity-selector">
-                                    <button class="quantity-btn minus" data-id="<?php echo $item['id']; ?>">-</button>
-                                    <input type="number" min="1" max="<?php echo $item['stock']; ?>" value="<?php echo $item['quantity']; ?>" 
-                                           id="quantity-<?php echo $item['id']; ?>" class="quantity-input" data-id="<?php echo $item['id']; ?>">
-                                    <button class="quantity-btn plus" data-id="<?php echo $item['id']; ?>">+</button>
+                                <div class="product-details">
+                                    <h3 class="product-title">
+                                        <a href="<?php echo SITE_URL; ?>/producto/<?php echo $item['slug']; ?>">
+                                            <?php echo htmlspecialchars($item['nombre']); ?>
+                                        </a>
+                                    </h3>
+                                    <?php if (!empty($item['sku'])): ?>
+                                        <div class="product-sku">SKU: <?php echo htmlspecialchars($item['sku']); ?></div>
+                                    <?php endif; ?>
                                 </div>
-                                <div class="stock-info">
-                                    <?php echo $item['stock']; ?> disponibles
-                                </div>
-                            </div>
-                            
-                            <div class="cart-col subtotal-col">
-                                <span class="subtotal"><?php echo formatear_precio($item['subtotal']); ?></span>
-                            </div>
-                            
-                            <div class="cart-col actions-col">
-                                <a href="<?php echo SITE_URL; ?>/carrito.php?action=remove&id=<?php echo $item['id']; ?>" 
-                                   class="btn-remove" title="Eliminar item">
-                                    <i class="fas fa-trash"></i>
-                                </a>
                             </div>
                         </div>
-                    <?php endforeach; ?>
+                        
+                        <div class="cart-col price-col">
+                            <?php if ($item['precio_oferta'] > 0 && $item['en_oferta']): ?>
+                                <div class="product-price">
+                                    <span class="price"><?php echo formatear_precio($item['precio_oferta']); ?></span>
+                                    <span class="original-price"><?php echo formatear_precio($item['precio']); ?></span>
+                                </div>
+                            <?php else: ?>
+                                <div class="product-price">
+                                    <span class="price"><?php echo formatear_precio($item['precio']); ?></span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <div class="cart-col quantity-col">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn minus" data-id="<?php echo $item['id']; ?>">-</button>
+                                <input type="number" min="1" max="<?php echo $item['stock']; ?>" value="<?php echo $item['quantity']; ?>" 
+                                       id="quantity-<?php echo $item['id']; ?>" class="quantity-input" data-id="<?php echo $item['id']; ?>">
+                                <button class="quantity-btn plus" data-id="<?php echo $item['id']; ?>">+</button>
+                            </div>
+                            <div class="stock-info">
+                                <?php echo $item['stock']; ?> disponibles
+                            </div>
+                        </div>
+                        
+                        <div class="cart-col subtotal-col">
+                            <span class="subtotal"><?php echo formatear_precio($item['subtotal']); ?></span>
+                        </div>
+                        
+                        <div class="cart-col actions-col">
+                            <a href="<?php echo SITE_URL; ?>/carrito.php?action=remove&id=<?php echo $item['id']; ?>" 
+                               class="btn-remove" title="Eliminar item">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            
+            <!-- IMPORTANTE: Botones fuera del grid de carrito -->
+            <div class="cart-actions">
+                <a href="<?php echo SITE_URL; ?>" class="btn-continue-shopping">
+                    <i class="fas fa-arrow-left"></i> Continuar comprando
+                </a>
+                <a href="<?php echo SITE_URL; ?>/carrito.php?action=clear" class="btn-clear-cart">
+                    <i class="fas fa-trash"></i> Vaciar carrito
+                </a>
+            </div>
+            
+            <!-- Layout principal de 2 columnas -->
+            <div class="cart-container">
+                <!-- Columna izquierda vacía para equilibrar el diseño -->
+                <div class="cart-main-content">
+                    <!-- Podemos agregar aquí recomendaciones de productos u otra información -->
                 </div>
                 
-                <div class="cart-actions">
-                    <a href="<?php echo SITE_URL; ?>" class="btn-continue-shopping">
-                        <i class="fas fa-arrow-left"></i> Continuar comprando
-                    </a>
-                    <a href="<?php echo SITE_URL; ?>/carrito.php?action=clear" class="btn-clear-cart">
-                        <i class="fas fa-trash"></i> Vaciar carrito
-                    </a>
-                </div>
-                
+                <!-- Columna derecha: Resumen del pedido -->
                 <div class="cart-summary">
                     <h2>Resumen del pedido</h2>
                     

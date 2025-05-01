@@ -1,11 +1,13 @@
 /* Estilos para la página de carrito de compras */
 
 .cart-page {
-    padding: 40px 0 60px;
+    padding: 30px 0 60px;
+    background-color: #f7f7f7;
 }
 
 .page-header {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+    text-align: center;
 }
 
 .page-title {
@@ -20,18 +22,19 @@
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
-}
-
-.alert-info {
+    border-left: 4px solid #2196f3;
     background-color: #e3f2fd;
     color: #0277bd;
-    border-left: 4px solid #2196f3;
 }
 
 /* Carrito vacío */
 .empty-cart {
     text-align: center;
     padding: 60px 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
 }
 
 .empty-cart-icon {
@@ -52,31 +55,18 @@
     margin-bottom: 30px;
 }
 
-.btn-continue-shopping,
-.btn-clear-cart {
-    display: inline-block;
-    padding: 8px 18px;
-    font-size: 14px;
-    border-radius: 5px;
-    font-weight: 500;
-    background-color: #0049b7;
-    color: white;
-    text-decoration: none;
-    transition: background-color 0.3s;
-    box-shadow: none;
-    margin: 0;
+/* Contenedor principal del carrito */
+.cart-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.btn-continue-shopping:hover,
-.btn-clear-cart:hover {
-    background-color: #003a94;
-}
-
-/* Contenedor del carrito */
+/* Estructura del carrito en 2 columnas */
 .cart-container {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: minmax(0, 1fr) 350px; /* Segunda columna fija, primera adaptable */
     gap: 30px;
+    align-items: start;
 }
 
 @media (max-width: 992px) {
@@ -88,9 +78,10 @@
 /* Lista de productos */
 .cart-items {
     background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     overflow: hidden;
+    margin-bottom: 20px;
 }
 
 .cart-header {
@@ -131,6 +122,7 @@
     align-items: center;
     justify-content: center;
     background-color: #fff;
+    padding: 5px;
 }
 
 .product-image img {
@@ -258,19 +250,56 @@
 /* Acciones del carrito */
 .cart-actions {
     display: flex;
-    justify-content: flex-start;
-    gap: 12px;
+    gap: 15px;
     margin-bottom: 30px;
+}
+
+.btn-continue-shopping,
+.btn-clear-cart {
+    display: inline-block;
+    padding: 12px 18px;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-continue-shopping {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    box-shadow: 0 2px 4px rgba(229, 57, 53, 0.2);
+}
+
+.btn-continue-shopping:hover {
+    background-color: #c62828;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(229, 57, 53, 0.3);
+}
+
+.btn-clear-cart {
+    background-color: #f5f5f5;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+.btn-clear-cart:hover {
+    background-color: #e0e0e0;
+    color: #333;
+    transform: translateY(-2px);
 }
 
 /* Resumen del pedido */
 .cart-summary {
     background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 25px;
     position: sticky;
     top: 20px;
+    height: fit-content;
 }
 
 .cart-summary h2 {
@@ -321,12 +350,15 @@
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
     margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(229, 57, 53, 0.2);
 }
 
 .btn-checkout:hover {
     background-color: #c62828;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(229, 57, 53, 0.3);
 }
 
 /* Responsive */
@@ -358,13 +390,13 @@
     
     .cart-actions {
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
     }
     
     .btn-continue-shopping,
     .btn-clear-cart {
         width: 100%;
-        justify-content: center;
+        text-align: center;
     }
 }
 
@@ -372,5 +404,13 @@
     .product-info {
         flex-direction: column;
         align-items: flex-start;
+    }
+    
+    .cart-page {
+        padding: 20px 0 40px;
+    }
+    
+    .cart-summary {
+        padding: 20px;
     }
 }
