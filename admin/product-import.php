@@ -178,7 +178,8 @@ function generateSlug($text) {
 
 // Función para generar SKU 
 // Función para generar SKU 
-function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
+
+function generateProductSKU($nombre, $marca_id, $categoria_id, $modelo) {
     // Obtener marca
     $marca = '';
     $sql = "SELECT nombre FROM marcas WHERE id = ?";
@@ -187,106 +188,91 @@ function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
         $marca = $marca_result['nombre'];
     }
     
-    // Abreviaturas de marca
+    // Abreviaturas de marca (2-3 letras)
     $marca2L = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $marca), 0, 2));
-    $marca1L = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $marca), 0, 1));
+    $marca3L = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $marca), 0, 3));
     
-    // Generar un número aleatorio para prevenir duplicados
-    $random_suffix = rand(100, 999);
-    
-    switch ($categoria_id) {
-        case 2: // Tarjetas Gráficas
-            // Extraer serie y memoria directamente de formato definido
-            preg_match('/(RTX|GTX|RX)\s*(\d+)/', $nombre, $matches_serie);
-            preg_match('/(\d+)GB/', $nombre, $matches_memoria);
-            
-            $serie = !empty($matches_serie[0]) ? str_replace(' ', '', $matches_serie[0]) : '';
-            $memoria = !empty($matches_memoria[1]) ? $matches_memoria[1] : '8';
-            
-            return "TG-{$marca2L}-{$serie}-{$memoria}G-{$random_suffix}";
-            
-        case 3: // Procesadores
-            // Extraer generación y modelo completo con variante
-            preg_match('/Core i\d-(\d+[A-Z]*)/', $nombre, $matches_modelo);
-            preg_match('/(\d+)G/', $nombre, $matches_gen);
-            
-            $generacion = !empty($matches_gen[1]) ? $matches_gen[1] : '14';
-            $modelo_completo = !empty($matches_modelo[1]) ? $matches_modelo[1] : '';
-            
-            // Si no se encontró el modelo en el formato esperado, intentar extraerlo de otra manera
-            if (empty($modelo_completo)) {
-                // Intentar extraer solo números seguidos opcionalmente de letras
-                preg_match('/(\d+[A-Z]*)/', $modelo, $modelo_matches);
-                $modelo_completo = !empty($modelo_matches[1]) ? $modelo_matches[1] : '';
-            }
-            
-            return "PR-{$marca1L}-{$generacion}G-{$modelo_completo}-{$random_suffix}";
-            
-        case 4: // Cases
-            // Extraer modelo y tipo
-            preg_match('/(\d+[A-Z]*)/', $nombre, $matches_modelo);
-            $modelo_case = !empty($matches_modelo[1]) ? $matches_modelo[1] : '';
-            $tipo = strpos(strtolower($nombre), 'mid') !== false ? 'M' : 'F';
-            
-            return "CS-{$marca2L}-{$modelo_case}-{$tipo}-{$random_suffix}";
-            
-        case 5: // Placas Madre
-            // Extraer chipset y socket
-            preg_match('/(Z\d+|B\d+|H\d+|X\d+)/', $nombre, $matches_chipset);
-            preg_match('/(LGA\d+|AM\d+)/', $nombre, $matches_socket);
-            
-            $chipset = !empty($matches_chipset[1]) ? $matches_chipset[1] : '';
-            $socket = !empty($matches_socket[1]) ? $matches_socket[1] : '';
-            
-            return "PM-{$marca2L}-{$chipset}-{$socket}-{$random_suffix}";
-            
-        case 6: // Laptops
-            // Extraer serie y procesador
-            preg_match('/(ROG|TUF|Legion|Predator)/', $nombre, $matches_serie);
-            preg_match('/(R\d|i\d)-?(\d+)?/', $nombre, $matches_proc);
-            
-            $serie = !empty($matches_serie[1]) ? $matches_serie[1] : '';
-            $procesador = !empty($matches_proc[0]) ? $matches_proc[0] : '';
-            $procesador_format = strtoupper(substr(str_replace('-', '', $procesador), 0, 3));
-            
-            return "LP-{$marca2L}-{$serie}-{$procesador_format}-{$random_suffix}";
-            
-        case 7: // PC Gamers
-            // Extraer nivel, procesador y GPU
-            $nivel = strpos($nombre, 'Xtreme') !== false ? 'X' : 
-                (strpos($nombre, 'Pro') !== false ? 'P' : 'G');
-            
-            preg_match('/(i\d)-(\d+)/', $nombre, $matches_proc);
-            preg_match('/(RTX|GTX|RX)\s*(\d+)/', $nombre, $matches_gpu);
-            
-            $procesador = !empty($matches_proc[0]) ? str_replace('-', '', $matches_proc[0]) : 'I9';
-            $procesador_format = strtoupper(substr($procesador, 0, 3));
-            $gpu = !empty($matches_gpu[0]) ? str_replace(' ', '', $matches_gpu[0]) : '';
-            
-            return "PC-{$nivel}-{$procesador_format}-{$gpu}-{$random_suffix}";
-            
-        case 8: // Impresoras
-            // Extraer modelo y tipo
-            preg_match('/(\d+)/', $nombre, $matches_modelo);
-            $modelo_imp = !empty($matches_modelo[1]) ? $matches_modelo[1] : '';
-            $tipo = (strpos(strtolower($nombre), 'multifun') !== false || 
-                    strpos(strtolower($nombre), 'smart tank') !== false) ? 'M' : 'S';
-            
-            return "IP-{$marca2L}-{$tipo}-{$modelo_imp}-{$random_suffix}";
-            
-        case 9: // Monitores
-            // Extraer tamaño y Hz
-            preg_match('/(\d+)["\'"]/', $nombre, $matches_tam);
-            preg_match('/(\d+)Hz/', $nombre, $matches_hz);
-            
-            $tamanho = !empty($matches_tam[1]) ? $matches_tam[1] : '27';
-            $hz = !empty($matches_hz[1]) ? $matches_hz[1] : '165';
-            
-            return "MN-{$marca2L}-{$tamanho}P-{$hz}-{$random_suffix}";
-            
-        default:
-            // Para otras categorías
-            return strtoupper("{$categoria_id}-{$marca2L}-{$modelo}-{$random_suffix}");
+    // Usar directamente el campo modelo si está disponible
+    if (!empty($modelo)) {
+        switch ($categoria_id) {
+            case 2: // Tarjetas Gráficas
+                return "TG-{$marca2L}-" . str_replace('-', '', $modelo) . "-001";
+                
+            case 3: // Procesadores
+                return "PR-{$marca3L}-" . str_replace('-', '', $modelo) . "-001";
+                
+            case 4: // Cases
+                return "CS-{$marca3L}-" . str_replace('-', '', $modelo) . "-001";
+                
+            case 5: // Placas Madre
+                return "PM-{$marca3L}-" . str_replace('-', '', $modelo) . "-001";
+                
+            case 6: // Laptops
+                return "LP-{$marca2L}-" . str_replace('-', '', $modelo) . "-001";
+                
+            case 7: // PC Gamers
+                return "PC-" . substr($modelo, 0, 3) . "-" . substr($modelo, 4, 4) . "-001";
+                
+            case 8: // Impresoras
+                return "IM-{$marca2L}-" . str_replace('-', '', $modelo) . "-001";
+                
+            case 9: // Monitores
+                return "MO-{$marca2L}-" . str_replace('-', '', $modelo) . "-001";
+                
+            default:
+                return "GEN-{$marca2L}-" . substr(md5($nombre), 0, 6) . "-001";
+        }
+    } else {
+        // Si no hay campo modelo, extraerlo del nombre
+        switch ($categoria_id) {
+            case 2: // Tarjetas Gráficas
+                preg_match('/(RTX|GTX|GT|RX)\s*(\d+[A-Za-z]*)/', $nombre, $matches_serie);
+                preg_match('/(\d+)GB/', $nombre, $matches_memoria);
+                
+                $serie = !empty($matches_serie[0]) ? str_replace(' ', '', $matches_serie[0]) : '';
+                $memoria = !empty($matches_memoria[1]) ? $matches_memoria[1] : '';
+                
+                return "TG-{$marca2L}-{$serie}-{$memoria}G";
+                
+            case 3: // Procesadores
+                if (strpos($nombre, 'Core') !== false) {
+                    preg_match('/i(\d)-(\d+[A-Za-z]*)/', $nombre, $matches_modelo);
+                    $modelo_cpu = !empty($matches_modelo[0]) ? str_replace(' ', '', $matches_modelo[0]) : '';
+                    
+                    preg_match('/(\d+)[vª]/', $nombre, $matches_gen);
+                    $gen = !empty($matches_gen[1]) ? $matches_gen[1] : '';
+                    
+                    return "PR-{$marca3L}-{$modelo_cpu}{$gen}-001";
+                } else {
+                    preg_match('/Ryzen\s*(\d+)\s*(\d+[A-Za-z]*)/', $nombre, $matches_ryzen);
+                    $ryzen_serie = !empty($matches_ryzen[1]) ? $matches_ryzen[1] : '';
+                    $ryzen_modelo = !empty($matches_ryzen[2]) ? $matches_ryzen[2] : '';
+                    
+                    preg_match('/(\d+)[vª]/', $nombre, $matches_gen);
+                    $gen = !empty($matches_gen[1]) ? $matches_gen[1] : '';
+                    
+                    return "PR-{$marca3L}-R{$ryzen_serie}-{$ryzen_modelo}{$gen}";
+                }
+                
+            case 5: // Placas Madre
+                preg_match('/(Z\d+|B\d+|H\d+|X\d+[A-Z]*|A\d+[A-Z]*)/', $nombre, $matches_chipset);
+                preg_match('/(LGA\d+|AM\d+)/', $nombre, $matches_socket);
+                
+                $chipset = !empty($matches_chipset[1]) ? $matches_chipset[1] : '';
+                $socket = !empty($matches_socket[1]) ? $matches_socket[1] : '';
+                
+                return "PM-{$marca3L}-{$chipset}-{$socket}";
+                
+            case 8: // Impresoras
+                preg_match('/(SmartTank|EcoTank|DeskJet)\s*(\d+[A-Za-z]*)/', $nombre, $matches_serie);
+                $serie = !empty($matches_serie[1]) ? $matches_serie[1] : '';
+                $modelo_imp = !empty($matches_serie[2]) ? $matches_serie[2] : '';
+                
+                return "IM-{$marca2L}-{$modelo_imp}-001";
+                
+            default:
+                return "GEN-{$marca2L}-" . substr(md5($nombre), 0, 6) . "-001";
+        }
     }
 }
 
