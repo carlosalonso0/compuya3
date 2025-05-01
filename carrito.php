@@ -16,50 +16,34 @@ $quantity = isset($_GET['cantidad']) ? (int)$_GET['cantidad'] : 1;
 $cart_message = '';
 
 // Realizar acciones según petición
-$is_ajax = (
-    isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-    strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
-) || (
-    isset($_SERVER['HTTP_ACCEPT']) && 
-    strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false
-);
-
 if ($action == 'add' && $product_id > 0) {
+    // Añadir producto al carrito
     $result = cart_add_product($product_id, $quantity);
-    if ($is_ajax) {
-        header('Content-Type: application/json');
-        echo json_encode($result);
-        exit;
+    if ($result['success']) {
+        $cart_message = 'Producto añadido al carrito correctamente.';
+    } else {
+        $cart_message = 'Error: ' . $result['message'];
     }
-    $cart_message = $result['success'] ? 'Producto añadido al carrito correctamente.' : 'Error: ' . $result['message'];
 } elseif ($action == 'update' && $product_id > 0) {
+    // Actualizar cantidad de producto
     $result = cart_update_quantity($product_id, $quantity);
-    if ($is_ajax) {
-        header('Content-Type: application/json');
-        echo json_encode($result);
-        exit;
+    if ($result['success']) {
+        $cart_message = 'Carrito actualizado correctamente.';
+    } else {
+        $cart_message = 'Error: ' . $result['message'];
     }
-    $cart_message = $result['success'] ? 'Carrito actualizado correctamente.' : 'Error: ' . $result['message'];
 } elseif ($action == 'remove' && $product_id > 0) {
+    // Eliminar producto del carrito
     $result = cart_remove_product($product_id);
-    if ($is_ajax) {
-        header('Content-Type: application/json');
-        echo json_encode($result);
-        exit;
+    if ($result['success']) {
+        $cart_message = 'Producto eliminado del carrito.';
+    } else {
+        $cart_message = 'Error: ' . $result['message'];
     }
-    $cart_message = $result['success'] ? 'Producto eliminado del carrito.' : 'Error: ' . $result['message'];
 } elseif ($action == 'clear') {
-    $result = cart_clear();
-    if ($is_ajax) {
-        header('Content-Type: application/json');
-        echo json_encode($result);
-        exit;
-    }
+    // Vaciar carrito
+    cart_clear();
     $cart_message = 'Carrito vaciado correctamente.';
-} elseif ($action == 'count') {
-    header('Content-Type: application/json');
-    echo json_encode(['count' => cart_count()]);
-    exit;
 }
 
 // Obtener contenido del carrito
