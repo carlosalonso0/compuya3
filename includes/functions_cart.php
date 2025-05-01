@@ -180,9 +180,41 @@ function cart_clear() {
 function cart_count() {
     cart_initialize();
     
+    // Reinicializar el conteo
     $count = 0;
-    foreach ($_SESSION['cart'] as $quantity) {
-        $count += $quantity;
+    
+    // Contar solo productos válidos (verifica que existan en la base de datos)
+    if (!empty($_SESSION['cart'])) {
+        $product_ids = array_keys($_SESSION['cart']);
+        
+        if (!empty($product_ids)) {
+            // Crear placeholders para consulta IN
+            $placeholders = implode(',', array_fill(0, count($product_ids), '?'));
+            
+            // Obtener productos válidos
+            $sql = "SELECT id FROM productos WHERE id IN ($placeholders) AND activo = 1";
+            $valid_products = get_rows($sql, $product_ids);
+            
+            // Filtrar el carrito para incluir solo productos válidos
+            $valid_ids = [];
+            foreach ($valid_products as $product) {
+                $valid_ids[] = $product['id'];
+            }
+            
+            // Calcular el conteo real basado solo en productos válidos
+            foreach ($valid_ids as $id) {
+                if (isset($_SESSION['cart'][$id])) {
+                    $count += $_SESSION['cart'][$id];
+                }
+            }
+            
+            // Limpiar productos inválidos del carrito
+            foreach ($_SESSION['cart'] as $id => $qty) {
+                if (!in_array($id, $valid_ids)) {
+                    unset($_SESSION['cart'][$id]);
+                }
+            }
+        }
     }
     
     return $count;

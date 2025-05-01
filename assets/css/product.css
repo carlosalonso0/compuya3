@@ -116,13 +116,16 @@
 }
 
 .product-title {
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 32px;
+    font-weight: 700;
     color: #222;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     line-height: 1.3;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    text-align: center;
+    border-bottom: 2px solid #e53935;
+    padding-bottom: 10px;
 }
+
 
 .product-meta {
     display: flex;
@@ -136,25 +139,24 @@
     color: #333;
 }
 
-.product-brand,
-.product-sku {
-    font-size: 14px;
-    color: #666;
+.product-brand, .product-sku {
+    font-size: 15px;
+    text-align: justify;
     margin-bottom: 10px;
 }
 
-.product-brand span,
-.product-sku span {
-    font-weight: 500;
+
+.product-brand span, .product-sku span {
+    font-weight: 600;
     color: #333;
+    display: inline-block;
+    width: 80px;
 }
 
 .product-price-container {
+    text-align: center;
     margin: 20px 0;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
+    padding: 15px 0;
 }
 
 .product-price {
@@ -179,11 +181,8 @@
 }
 
 .product-stock {
+    text-align: center;
     margin-bottom: 25px;
-    font-size: 15px;
-    background-color: #f9f9f9;
-    padding: 12px 15px;
-    border-radius: 8px;
 }
 
 .in-stock {
@@ -526,3 +525,5 @@
         font-size: 20px;
     }
 }
+
+

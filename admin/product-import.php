@@ -191,6 +191,9 @@ function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
     $marca2L = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $marca), 0, 2));
     $marca1L = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $marca), 0, 1));
     
+    // Generar un número aleatorio para prevenir duplicados
+    $random_suffix = rand(100, 999);
+    
     switch ($categoria_id) {
         case 2: // Tarjetas Gráficas
             // Extraer serie y memoria directamente de formato definido
@@ -200,17 +203,24 @@ function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
             $serie = !empty($matches_serie[0]) ? str_replace(' ', '', $matches_serie[0]) : '';
             $memoria = !empty($matches_memoria[1]) ? $matches_memoria[1] : '8';
             
-            return "TG-{$marca2L}-{$serie}-{$memoria}G";
+            return "TG-{$marca2L}-{$serie}-{$memoria}G-{$random_suffix}";
             
         case 3: // Procesadores
-            // Extraer generación y modelo
-            preg_match('/Core i\d-(\d+)/', $nombre, $matches_modelo);
+            // Extraer generación y modelo completo con variante
+            preg_match('/Core i\d-(\d+[A-Z]*)/', $nombre, $matches_modelo);
             preg_match('/(\d+)G/', $nombre, $matches_gen);
             
             $generacion = !empty($matches_gen[1]) ? $matches_gen[1] : '14';
-            $modelo_cpu = !empty($matches_modelo[1]) ? $matches_modelo[1] : '';
+            $modelo_completo = !empty($matches_modelo[1]) ? $matches_modelo[1] : '';
             
-            return "PR-{$marca1L}-{$generacion}G-{$modelo_cpu}";
+            // Si no se encontró el modelo en el formato esperado, intentar extraerlo de otra manera
+            if (empty($modelo_completo)) {
+                // Intentar extraer solo números seguidos opcionalmente de letras
+                preg_match('/(\d+[A-Z]*)/', $modelo, $modelo_matches);
+                $modelo_completo = !empty($modelo_matches[1]) ? $modelo_matches[1] : '';
+            }
+            
+            return "PR-{$marca1L}-{$generacion}G-{$modelo_completo}-{$random_suffix}";
             
         case 4: // Cases
             // Extraer modelo y tipo
@@ -218,7 +228,7 @@ function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
             $modelo_case = !empty($matches_modelo[1]) ? $matches_modelo[1] : '';
             $tipo = strpos(strtolower($nombre), 'mid') !== false ? 'M' : 'F';
             
-            return "CS-{$marca2L}-{$modelo_case}-{$tipo}";
+            return "CS-{$marca2L}-{$modelo_case}-{$tipo}-{$random_suffix}";
             
         case 5: // Placas Madre
             // Extraer chipset y socket
@@ -228,7 +238,7 @@ function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
             $chipset = !empty($matches_chipset[1]) ? $matches_chipset[1] : '';
             $socket = !empty($matches_socket[1]) ? $matches_socket[1] : '';
             
-            return "PM-{$marca2L}-{$chipset}-{$socket}";
+            return "PM-{$marca2L}-{$chipset}-{$socket}-{$random_suffix}";
             
         case 6: // Laptops
             // Extraer serie y procesador
@@ -239,7 +249,7 @@ function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
             $procesador = !empty($matches_proc[0]) ? $matches_proc[0] : '';
             $procesador_format = strtoupper(substr(str_replace('-', '', $procesador), 0, 3));
             
-            return "LP-{$marca2L}-{$serie}-{$procesador_format}";
+            return "LP-{$marca2L}-{$serie}-{$procesador_format}-{$random_suffix}";
             
         case 7: // PC Gamers
             // Extraer nivel, procesador y GPU
@@ -253,7 +263,7 @@ function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
             $procesador_format = strtoupper(substr($procesador, 0, 3));
             $gpu = !empty($matches_gpu[0]) ? str_replace(' ', '', $matches_gpu[0]) : '';
             
-            return "PC-{$nivel}-{$procesador_format}-{$gpu}";
+            return "PC-{$nivel}-{$procesador_format}-{$gpu}-{$random_suffix}";
             
         case 8: // Impresoras
             // Extraer modelo y tipo
@@ -262,7 +272,7 @@ function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
             $tipo = (strpos(strtolower($nombre), 'multifun') !== false || 
                     strpos(strtolower($nombre), 'smart tank') !== false) ? 'M' : 'S';
             
-            return "IP-{$marca2L}-{$tipo}-{$modelo_imp}";
+            return "IP-{$marca2L}-{$tipo}-{$modelo_imp}-{$random_suffix}";
             
         case 9: // Monitores
             // Extraer tamaño y Hz
@@ -272,11 +282,11 @@ function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
             $tamanho = !empty($matches_tam[1]) ? $matches_tam[1] : '27';
             $hz = !empty($matches_hz[1]) ? $matches_hz[1] : '165';
             
-            return "MN-{$marca2L}-{$tamanho}P-{$hz}";
+            return "MN-{$marca2L}-{$tamanho}P-{$hz}-{$random_suffix}";
             
         default:
             // Para otras categorías
-            return strtoupper("{$categoria_id}-{$marca2L}-{$modelo}");
+            return strtoupper("{$categoria_id}-{$marca2L}-{$modelo}-{$random_suffix}");
     }
 }
 
