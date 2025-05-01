@@ -8,14 +8,40 @@ require_once 'config.php';
 require_once INCLUDES_PATH . '/functions.php';
 require_once INCLUDES_PATH . '/functions_cart.php';
 
+// Iniciar sesión si no está iniciada
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 // Procesar acciones del carrito
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $quantity = isset($_GET['cantidad']) ? (int)$_GET['cantidad'] : 1;
 
+// Si es una solicitud AJAX para añadir al carrito
+if ($action == 'add' && $product_id > 0 && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+    // Añadir producto al carrito
+    $result = cart_add_product($product_id, $quantity);
+    
+    // Devolver respuesta JSON
+    header('Content-Type: application/json');
+    echo json_encode($result);
+    exit;
+}
+
+// Si es una solicitud AJAX para obtener el conteo del carrito
+if ($action == 'count' && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+    $count = cart_count();
+    
+    // Devolver respuesta JSON
+    header('Content-Type: application/json');
+    echo json_encode(['count' => $count]);
+    exit;
+}
+
 $cart_message = '';
 
-// Realizar acciones según petición
+// Realizar acciones según petición para solicitudes normales (no AJAX)
 if ($action == 'add' && $product_id > 0) {
     // Añadir producto al carrito
     $result = cart_add_product($product_id, $quantity);

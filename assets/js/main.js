@@ -38,17 +38,27 @@ function setupMobileMenu() {
  * Configurar botones de añadir al carrito (unificado)
  */
 function setupAddToCartButtons() {
-    function updateCartCountAjax() {
-        fetch('/carrito.php?action=count')
-            .then(res => res.json())
-            .then(data => {
-                const cartCountElement = document.querySelector('.new-cart-count');
-                if (cartCountElement && data.count !== undefined) {
-                    cartCountElement.textContent = data.count;
-                }
-            });
+    // Función para actualizar contador del carrito
+    function updateCartCount() {
+        fetch(SITE_URL + '/carrito.php?action=count', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const cartCountElement = document.querySelector('.new-cart-count');
+            if (cartCountElement && data.count !== undefined) {
+                cartCountElement.textContent = data.count;
+            }
+        })
+        .catch(error => {
+            console.error('Error al obtener contador del carrito:', error);
+        });
     }
 
+    // Escuchar clicks en botones de añadir al carrito
     document.body.addEventListener('click', function(e) {
         // Soporta tanto <a> como <button> con .btn-add-cart
         const btn = e.target.closest('.btn-add-cart:not(.disabled)');
@@ -63,10 +73,17 @@ function setupAddToCartButtons() {
                 try {
                     const url = new URL(href, window.location.origin);
                     productId = url.searchParams.get('id');
-                } catch (err) {}
+                } catch (err) {
+                    console.error('Error al extraer ID del producto:', err);
+                    return;
+                }
             }
         }
-        if (!productId) return;
+        
+        if (!productId) {
+            console.error('No se pudo determinar el ID del producto');
+            return;
+        }
 
         // Cantidad (si hay input de cantidad cerca)
         let quantity = 1;
@@ -79,24 +96,62 @@ function setupAddToCartButtons() {
             quantity = parseInt(qtyInput.value) || 1;
         }
 
-        fetch(`/carrito.php?action=add&id=${productId}&cantidad=${quantity}`)
-            .then(res => res.json())
-            .then(data => {
-                updateCartCountAjax();
-                if (data.success) {
-                    btn.innerHTML = '<i class="fas fa-check"></i> Añadido';
-                    btn.classList.add('added');
-                    setTimeout(() => {
-                        btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Añadir al carrito';
-                        btn.classList.remove('added');
-                    }, 2000);
-                } else {
-                    alert(data.message || 'No se pudo añadir al carrito');
-                }
-            });
+        // Mostrar indicador de carga
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Añadiendo...';
+        btn.disabled = true;
+
+        // Realizar petición AJAX
+        fetch(SITE_URL + `/carrito.php?action=add&id=${productId}&cantidad=${quantity}`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+            return response.json();
+        })
+        .then(data => {
+            updateCartCount();
+            
+            if (data.success) {
+                btn.innerHTML = '<i class="fas fa-check"></i> Añadido';
+                btn.classList.add('added');
+                
+                // Restaurar estado original después de 2 segundos
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.classList.remove('added');
+                    btn.disabled = false;
+                }, 2000);
+            } else {
+                btn.innerHTML = '<i class="fas fa-times"></i> Error';
+                alert(data.message || 'No se pudo añadir al carrito');
+                
+                // Restaurar estado original después de 2 segundos
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                }, 2000);
+            }
+        })
+        .catch(error => {
+            console.error('Error al añadir al carrito:', error);
+            btn.innerHTML = '<i class="fas fa-times"></i> Error';
+            
+            // Restaurar estado original después de 2 segundos
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }, 2000);
+        });
     });
 
-    updateCartCountAjax();
+    // Actualizar contador del carrito al cargar la página
+    updateCartCount();
 }
 
 /**
@@ -155,6 +210,10 @@ function getUrlParameter(name) {
 // Manejar errores de carga de imágenes
 document.addEventListener('error', function(e) {
     if (e.target.tagName.toLowerCase() === 'img') {
-        e.target.src = '/assets/images/site/no-image.webp';
+        e.target.src = SITE_URL + '/assets/images/site/no-image.webp';
     }
 }, true);
+
+// Añadir la variable SITE_URL para acceso global
+// Esta variable debe ser definida globalmente para que las funciones puedan usarla
+var SITE_URL = document.querySelector('meta[name="site-url"]')?.getAttribute('content') || '';

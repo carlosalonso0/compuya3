@@ -75,9 +75,9 @@ $clase_stock = $tiene_stock ? 'stock-disponible' : 'sin-stock';
         </div>
         
         <?php if ($tiene_stock): ?>
-            <a href="<?php echo SITE_URL; ?>/carrito.php?action=add&id=<?php echo $id; ?>" class="btn-add-cart">
+            <button class="btn-add-cart" data-product-id="<?php echo $id; ?>">
                 <i class="fas fa-shopping-cart"></i> Añadir al carrito
-            </a>
+            </button>
         <?php else: ?>
             <button class="btn-add-cart disabled" disabled>
                 <i class="fas fa-times"></i> Agotado

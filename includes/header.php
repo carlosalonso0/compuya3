@@ -10,6 +10,9 @@ require_once INCLUDES_PATH . '/functions_categories.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compu Ya</title>
     
+    <!-- Añadir meta tag para SITE_URL -->
+    <meta name="site-url" content="<?php echo SITE_URL; ?>">
+    
     <!-- Estilos base -->
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/style.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/utilities.css">
@@ -40,6 +43,11 @@ require_once INCLUDES_PATH . '/functions_categories.php';
     
     <link rel="icon" type="image/png" href="<?php echo SITE_IMG_URL; ?>/logo/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Script global para SITE_URL -->
+    <script>
+        var SITE_URL = '<?php echo SITE_URL; ?>';
+    </script>
 </head>
 <body>
     <header class="new-site-header">
