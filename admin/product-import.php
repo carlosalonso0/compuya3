@@ -179,7 +179,7 @@ function generateSlug($text) {
 // Función para generar SKU 
 // Función para generar SKU 
 
-function generateProductSKU($nombre, $marca_id, $categoria_id, $modelo) {
+function generateProductSKU($nombre, $marca_id, $modelo, $categoria_id) {
     // Obtener marca
     $marca = '';
     $sql = "SELECT nombre FROM marcas WHERE id = ?";

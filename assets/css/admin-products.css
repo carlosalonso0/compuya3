@@ -1,0 +1,453 @@
+/* Estilos para la gestión de productos en el panel de administración */
+
+/* Pestañas de navegación */
+.form-tabs {
+    margin-bottom: 30px;
+}
+
+.tab-nav {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 12px 20px;
+    background-color: #f5f5f5;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-right: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+    color: #555;
+}
+
+.tab-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.tab-btn.active {
+    background-color: #fff;
+    border-bottom-color: #e53935;
+    color: #333;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Formulario de productos */
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 0;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #0049b7;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 73, 183, 0.1);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.required {
+    color: #e53935;
+}
+
+/* Especificaciones */
+.specs-container {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.specs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.specs-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.btn-add-spec {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-add-spec:hover {
+    background-color: #388e3c;
+}
+
+.specs-list {
+    margin-bottom: 20px;
+}
+
+.spec-row {
+    margin-bottom: 10px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.spec-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.spec-input-group input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn-remove-spec {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-remove-spec:hover {
+    background-color: #d32f2f;
+}
+
+/* Sugerencias de especificaciones */
+.spec-suggestions-container {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.spec-suggestions-container h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+}
+
+.spec-suggestions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.spec-suggestion-item {
+    padding: 10px 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.spec-suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+.spec-suggestion-item.added {
+    background-color: #e8f5e9;
+    border-color: #a5d6a7;
+}
+
+.spec-suggestion-item .spec-name {
+    font-weight: 500;
+    margin-right: 10px;
+    color: #333;
+}
+
+.spec-suggestion-item .spec-value {
+    color: #757575;
+    flex: 1;
+}
+
+.btn-add-suggestion {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-add-suggestion:hover {
+    background-color: #388e3c;
+}
+
+.btn-add-suggestion:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+}
+
+.btn-add-all-specs {
+    padding: 8px 15px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: block;
+    margin: 0 auto;
+}
+
+.btn-add-all-specs:hover {
+    background-color: #388e3c;
+}
+
+/* Imágenes */
+.image-upload-container {
+    margin-bottom: 15px;
+}
+
+.image-upload-box {
+    border: 2px dashed #ddd;
+    padding: 30px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.image-upload-box:hover,
+.image-upload-box.highlight {
+    border-color: #0049b7;
+}
+
+.image-upload-box input[type="file"] {
+    display: none;
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #777;
+}
+
+.upload-placeholder i {
+    font-size: 48px;
+    color: #bbb;
+}
+
+.image-preview {
+    display: none;
+    width: 100%;
+    max-height: 200px;
+    margin-bottom: 15px;
+    text-align: center;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.image-preview-gallery {
+    display: none;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.gallery-img-container {
+    width: calc(25% - 8px);
+    height: 150px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-img-container img {
+    max-width: 100%;
+    max-height: 140px;
+    object-fit: contain;
+}
+
+/* Botones de acción */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.btn-cancel {
+    padding: 12px 20px;
+    background-color: #f5f5f5;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-cancel:hover {
+    background-color: #e0e0e0;
+}
+
+.btn-submit {
+    padding: 12px 25px;
+    background-color: #e53935;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #c62828;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .spec-suggestions {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .tab-nav {
+        flex-direction: column;
+        border-bottom: none;
+    }
+    
+    .tab-btn {
+        margin-right: 0;
+        margin-bottom: 5px;
+        border-left: 3px solid transparent;
+        border-bottom: none;
+    }
+    
+    .tab-btn.active {
+        border-left-color: #e53935;
+        border-bottom: none;
+    }
+    
+    .gallery-img-container {
+        width: calc(50% - 5px);
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn-cancel,
+    .btn-submit {
+        width: 100%;
+        text-align: center;
+    }
+}
