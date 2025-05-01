@@ -88,12 +88,11 @@ function setupAddToCartButtons() {
         // Cantidad (si hay input de cantidad cerca)
         let quantity = 1;
         let qtyInput = btn.closest('.product-card, .product-actions, .product-info')?.querySelector('input[type="number"]');
-        if (!qtyInput) {
-            // Busca en el documento si es página de producto
-            qtyInput = document.getElementById('product-quantity');
-        }
         if (qtyInput) {
             quantity = parseInt(qtyInput.value) || 1;
+        } else {
+            // Si el botón NO está dentro de un bloque con input de cantidad, siempre añade 1
+            quantity = 1;
         }
 
         // Mostrar indicador de carga
