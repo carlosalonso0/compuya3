@@ -170,6 +170,31 @@
     display: block;
 }
 
+/* Submenú de segundo nivel para Componentes */
+.new-submenu-item {
+    position: relative;
+}
+
+.new-submenu-item.new-has-submenu::after {
+    content: "►";
+    font-size: 10px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.new-submenu-item .new-submenu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    display: none;
+}
+
+.new-submenu-item:hover > .new-submenu {
+    display: block;
+}
+
 /* CATEGORÍAS DESTACADAS - Fondo blanco en lugar de gris */
 .new-featured-categories {
     background-color: #ffffff; /* Cambiado de #f5f5f5 a blanco */
@@ -281,6 +306,20 @@
     .new-category-list a {
         padding: 12px 20px;
     }
+    
+    /* Ajustes para menú anidado en móvil */
+    .new-submenu-item .new-submenu {
+        position: static;
+        margin-left: 20px;
+        width: auto;
+        display: none;
+        border: none;
+        box-shadow: none;
+    }
+    
+    .new-submenu-item.active > .new-submenu {
+        display: block;
+    }
 }
 
 @media (max-width: 768px) {
@@ -347,3 +386,24 @@
         -webkit-overflow-scrolling: touch;
     }
 }
+
+/* Añadir al final de header.css */
+@media (max-width: 768px) {
+    .new-category-list {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start; /* Cambiado de center */
+        padding: 0 10px;
+    }
+    
+    .new-category-list li {
+        flex: 0 0 auto;
+    }
+    
+    .new-featured-categories .new-container {
+        padding: 0;
+        width: 100%;
+    }
+}
+
+

@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (window.innerWidth <= 768) {
                     e.preventDefault();
                     item.classList.toggle('active');
+                    
+                    // Si es un submenu-item, manejo especial
+                    if (item.classList.contains('new-submenu-item')) {
+                        // Evitar cerrar el menú principal
+                        e.stopPropagation();
+                    }
                 }
             });
             
@@ -37,6 +43,22 @@ document.addEventListener('DOMContentLoaded', function() {
             item.addEventListener('mouseleave', function() {
                 if (window.innerWidth > 768) {
                     this.classList.remove('hover');
+                }
+            });
+        }
+    });
+    
+    // Manejo específico para submenu-item (Componentes)
+    const submenuItems = document.querySelectorAll('.new-submenu-item.new-has-submenu');
+    submenuItems.forEach(item => {
+        const link = item.querySelector('a');
+        if (link) {
+            // Evento separado para móviles
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    e.stopPropagation(); // Importante para que no se propague al menú padre
+                    item.classList.toggle('active');
                 }
             });
         }

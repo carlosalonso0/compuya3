@@ -71,18 +71,21 @@ require_once INCLUDES_PATH . '/functions_categories.php';
                 <button class="new-mobile-menu-toggle"><i class="fas fa-bars"></i></button>
                 
                 <ul class="new-main-menu-items">
+                    <li><a href="<?php echo SITE_URL; ?>">Inicio</a></li>
                     <li class="new-has-submenu">
                         <a href="#">Categorías</a>
                         <div class="new-submenu">
-                            <div class="new-submenu-item new-has-children">
-                                <a href="#">Componentes</a>
-                                <div class="new-submenu-children">
+                            <!-- Componentes con su propio submenú -->
+                            <div class="new-submenu-item new-has-submenu">
+                                <a href="<?php echo SITE_URL; ?>/categoria/componentes">Componentes</a>
+                                <div class="new-submenu">
                                     <a href="<?php echo SITE_URL; ?>/categoria/cases">Cases</a>
                                     <a href="<?php echo SITE_URL; ?>/categoria/placas-madre">Placas Madre</a>
                                     <a href="<?php echo SITE_URL; ?>/categoria/procesadores">Procesadores</a>
                                     <a href="<?php echo SITE_URL; ?>/categoria/tarjetas-graficas">Tarjetas Gráficas</a>
                                 </div>
                             </div>
+                            <!-- Categorías principales sin submenú -->
                             <a href="<?php echo SITE_URL; ?>/categoria/impresoras">Impresoras</a>
                             <a href="<?php echo SITE_URL; ?>/categoria/laptops">Laptops</a>
                             <a href="<?php echo SITE_URL; ?>/categoria/monitores">Monitores</a>
