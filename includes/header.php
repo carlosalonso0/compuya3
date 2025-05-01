@@ -41,6 +41,11 @@ require_once INCLUDES_PATH . '/functions_categories.php';
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/sections/section-products-6789.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/sections/section-offers-1011.css">
     
+
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/sections/section-brands.css">
+
+
+
     <link rel="icon" type="image/png" href="<?php echo SITE_IMG_URL; ?>/logo/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     

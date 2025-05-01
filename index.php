@@ -9,6 +9,7 @@ require_once INCLUDES_PATH . '/functions.php';
 require_once INCLUDES_PATH . '/content/banner-carousel.php';
 require_once INCLUDES_PATH . '/content/product-carousel.php';
 require_once INCLUDES_PATH . '/content/special-offers.php';
+require_once INCLUDES_PATH . '/content/brands-carousel.php'; // Nuevo archivo incluido
 
 // Cargar el header del sitio
 include_once INCLUDES_PATH . '/header.php';
@@ -20,6 +21,9 @@ include_once INCLUDES_PATH . '/header.php';
         <?php renderizar_carrusel_banners(1); ?>
     </div>
 </div>
+
+<!-- Carrusel de Marcas -->
+<?php renderizar_carrusel_marcas(); ?>
 
 <!-- Sección con carruseles 2-5 -->
 <div class="container">

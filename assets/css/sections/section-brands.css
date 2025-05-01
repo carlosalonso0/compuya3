@@ -1,0 +1,145 @@
+/* assets/css/sections/section-brands.css */
+.brands-section {
+    padding: 20px 0;
+    background-color: #fff;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-radius: 8px;
+}
+
+.brands-carousel {
+    position: relative;
+    padding: 0 40px;
+}
+
+.brands-container {
+    display: flex;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+}
+
+.brand-item {
+    flex: 0 0 16.666%;
+    min-width: 16.666%;
+    max-width: 16.666%;
+    padding: 0 15px;
+    transition: transform 0.3s ease;
+}
+
+.brand-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+}
+
+.brand-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.brand-card img {
+    max-width: 90%;
+    max-height: 60px;
+    object-fit: contain;
+    filter: grayscale(20%);
+    opacity: 0.85;
+    transition: all 0.3s ease;
+    padding: 0 !important;
+}
+
+.brand-card:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.brands-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    position: relative;
+}
+
+.brands-title:after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: #e53935;
+    margin: 10px auto 0;
+}
+
+.brands-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.brands-control {
+    pointer-events: auto;
+    width: 36px;
+    height: 36px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.brands-control:hover {
+    background-color: #e53935;
+    color: white;
+    border-color: #e53935;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .brand-item {
+        flex: 0 0 25%;
+        min-width: 25%;
+        max-width: 25%;
+    }
+}
+
+@media (max-width: 768px) {
+    .brand-item {
+        flex: 0 0 33.333%;
+        min-width: 33.333%;
+        max-width: 33.333%;
+    }
+}
+
+@media (max-width: 576px) {
+    .brand-item {
+        flex: 0 0 50%;
+        min-width: 50%;
+        max-width: 50%;
+    }
+    
+    .brands-section {
+        padding: 15px 0;
+    }
+    
+    .brands-carousel {
+        padding: 0 30px;
+    }
+}
