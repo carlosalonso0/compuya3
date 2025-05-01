@@ -17,6 +17,9 @@ require_once INCLUDES_PATH . '/functions_categories.php';
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/footer.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/search.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/product.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/contact.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/cart.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/checkout.css">
     
     <!-- Componentes -->
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/components/product-card.css">
@@ -59,7 +62,7 @@ require_once INCLUDES_PATH . '/functions_categories.php';
                 <div class="new-cart-icon">
                     <a href="<?php echo SITE_URL; ?>/carrito.php">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="new-cart-count">0</span>
+                        <span class="new-cart-count"><?php echo function_exists('cart_count') ? cart_count() : 0; ?></span>
                     </a>
                 </div>
             </div>

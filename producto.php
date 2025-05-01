@@ -175,8 +175,7 @@ include_once INCLUDES_PATH . '/header.php';
                             <input type="number" value="1" min="1" max="<?php echo $producto['stock']; ?>" id="product-quantity">
                             <button class="quantity-btn plus">+</button>
                         </div>
-                        
-                        <button class="btn-add-to-cart" data-product-id="<?php echo $producto_id; ?>">
+                        <button class="btn-add-cart" data-product-id="<?php echo $producto_id; ?>">
                             <i class="fas fa-shopping-cart"></i> Añadir al carrito
                         </button>
                     </div>
@@ -253,56 +252,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
-    // Botón Añadir al carrito
-    const addToCartBtn = document.querySelector('.btn-add-to-cart');
-    
-    if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', function() {
-            const productId = this.getAttribute('data-product-id');
-            const quantity = parseInt(quantityInput.value);
-            
-            // Aquí iría la lógica para añadir al carrito (AJAX o localStorage)
-            // Por ahora solo mostramos un mensaje
-            
-            // Ejemplo con localStorage
-            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-            
-            // Verificar si el producto ya está en el carrito
-            const existingItem = cartItems.find(item => item.id === productId);
-            
-            if (existingItem) {
-                existingItem.quantity += quantity;
-            } else {
-                cartItems.push({
-                    id: productId,
-                    quantity: quantity
-                });
-            }
-            
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            
-            // Actualizar contador de carrito
-            updateCartCount();
-            
-            // Mostrar mensaje
-            alert('Producto añadido al carrito');
-        });
-    }
-    
-    // Actualizar contador del carrito
-    function updateCartCount() {
-        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        const count = cartItems.reduce((total, item) => total + item.quantity, 0);
-        
-        const cartCountElement = document.querySelector('.new-cart-count');
-        if (cartCountElement) {
-            cartCountElement.textContent = count;
-        }
-    }
-    
-    // Inicializar contador
-    updateCartCount();
 });
 </script>
 

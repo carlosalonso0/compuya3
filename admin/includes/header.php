@@ -42,13 +42,8 @@ if (!isset($page_title)) {
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo SITE_URL; ?>/admin/carousels.php" <?php echo basename($_SERVER['PHP_SELF']) == 'carousels.php' ? 'class="active"' : ''; ?>>
-                        <i class="fas fa-sliders-h"></i> Carruseles
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo SITE_URL; ?>/admin/banners.php" <?php echo basename($_SERVER['PHP_SELF']) == 'banners.php' ? 'class="active"' : ''; ?>>
-                        <i class="fas fa-image"></i> Banners
+                    <a href="<?php echo SITE_URL; ?>/admin/pedidos.php" <?php echo basename($_SERVER['PHP_SELF']) == 'pedidos.php' || basename($_SERVER['PHP_SELF']) == 'pedido-ver.php' ? 'class="active"' : ''; ?>>
+                        <i class="fas fa-shopping-cart"></i> Pedidos
                     </a>
                 </li>
                 <li>
@@ -62,8 +57,23 @@ if (!isset($page_title)) {
                     </a>
                 </li>
                 <li>
+                    <a href="<?php echo SITE_URL; ?>/admin/carousels.php" <?php echo basename($_SERVER['PHP_SELF']) == 'carousels.php' ? 'class="active"' : ''; ?>>
+                        <i class="fas fa-sliders-h"></i> Carruseles
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo SITE_URL; ?>/admin/banners.php" <?php echo basename($_SERVER['PHP_SELF']) == 'banners.php' ? 'class="active"' : ''; ?>>
+                        <i class="fas fa-image"></i> Banners
+                    </a>
+                </li>
+                <li>
                     <a href="<?php echo SITE_URL; ?>/admin/offers.php" <?php echo basename($_SERVER['PHP_SELF']) == 'offers.php' ? 'class="active"' : ''; ?>>
                         <i class="fas fa-tags"></i> Ofertas
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo SITE_URL; ?>/admin/mensajes.php" <?php echo basename($_SERVER['PHP_SELF']) == 'mensajes.php' || basename($_SERVER['PHP_SELF']) == 'mensaje-ver.php' ? 'class="active"' : ''; ?>>
+                        <i class="fas fa-envelope"></i> Mensajes
                     </a>
                 </li>
                 <li class="sidebar-divider"></li>

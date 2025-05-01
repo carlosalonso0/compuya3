@@ -11,7 +11,6 @@
     max-width: 1400px;
     width: 90%;
     margin: 0 auto;
-    display: flex;
     align-items: center;
     justify-content: space-between;
 }
@@ -177,21 +176,19 @@
 
 .new-featured-categories .new-container {
     overflow-x: auto !important;
-    justify-content: center;
+    display: block;
     white-space: nowrap;
     padding-bottom: 2px;
-    display: flex;
 }
 
 .new-category-list {
-    display: flex;
+    display: inline-flex;
     flex-wrap: nowrap !important;
     list-style-type: none;
     padding: 0;
     margin: 0 auto;
     white-space: nowrap;
     min-width: max-content;
-    justify-content: center;
 }
 
 .new-category-list li {

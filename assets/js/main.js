@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar menú móvil
     setupMobileMenu();
     
-    // Inicializar botones de añadir al carrito
+    // Inicializar botones de añadir al carrito (unificado)
     setupAddToCartButtons();
     
     // Inicializar contador de tiempo para ofertas estáticas
@@ -35,32 +35,68 @@ function setupMobileMenu() {
 }
 
 /**
- * Configurar botones de añadir al carrito
+ * Configurar botones de añadir al carrito (unificado)
  */
 function setupAddToCartButtons() {
-    const addToCartButtons = document.querySelectorAll('.btn-add-cart:not(.disabled)');
-    
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            if (!button.hasAttribute('href')) return;
-            
-            e.preventDefault();
-            const productId = new URL(button.getAttribute('href')).searchParams.get('id');
-            
-            // Animar el botón
-            button.innerHTML = '<i class="fas fa-check"></i> Añadido';
-            button.classList.add('added');
-            
-            // Simular añadir al carrito (en producción aquí iría una llamada AJAX)
-            setTimeout(() => {
-                button.innerHTML = '<i class="fas fa-shopping-cart"></i> Añadir al carrito';
-                button.classList.remove('added');
-            }, 2000);
-            
-            // Aquí iría la lógica real para añadir al carrito
-            console.log('Producto añadido al carrito:', productId);
-        });
+    function updateCartCountAjax() {
+        fetch('/carrito.php?action=count')
+            .then(res => res.json())
+            .then(data => {
+                const cartCountElement = document.querySelector('.new-cart-count');
+                if (cartCountElement && data.count !== undefined) {
+                    cartCountElement.textContent = data.count;
+                }
+            });
+    }
+
+    document.body.addEventListener('click', function(e) {
+        // Soporta tanto <a> como <button> con .btn-add-cart
+        const btn = e.target.closest('.btn-add-cart:not(.disabled)');
+        if (!btn) return;
+        e.preventDefault();
+
+        let productId = btn.getAttribute('data-product-id');
+        if (!productId) {
+            // Si no tiene data-product-id, intenta extraerlo del href (para <a>)
+            const href = btn.getAttribute('href');
+            if (href && href.includes('id=')) {
+                try {
+                    const url = new URL(href, window.location.origin);
+                    productId = url.searchParams.get('id');
+                } catch (err) {}
+            }
+        }
+        if (!productId) return;
+
+        // Cantidad (si hay input de cantidad cerca)
+        let quantity = 1;
+        let qtyInput = btn.closest('.product-card, .product-actions, .product-info')?.querySelector('input[type="number"]');
+        if (!qtyInput) {
+            // Busca en el documento si es página de producto
+            qtyInput = document.getElementById('product-quantity');
+        }
+        if (qtyInput) {
+            quantity = parseInt(qtyInput.value) || 1;
+        }
+
+        fetch(`/carrito.php?action=add&id=${productId}&cantidad=${quantity}`)
+            .then(res => res.json())
+            .then(data => {
+                updateCartCountAjax();
+                if (data.success) {
+                    btn.innerHTML = '<i class="fas fa-check"></i> Añadido';
+                    btn.classList.add('added');
+                    setTimeout(() => {
+                        btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Añadir al carrito';
+                        btn.classList.remove('added');
+                    }, 2000);
+                } else {
+                    alert(data.message || 'No se pudo añadir al carrito');
+                }
+            });
     });
+
+    updateCartCountAjax();
 }
 
 /**
